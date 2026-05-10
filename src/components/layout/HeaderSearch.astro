@@ -1,0 +1,111 @@
+---
+import { Search, X } from "@lucide/astro";
+---
+<div
+  id="il-search-panel"
+  data-open="false"
+  class="border-t border-(--color-ink-200) bg-(--color-paper) overflow-hidden transition-all duration-200"
+  style="max-height: 0;"
+>
+  <div class="container-wide py-4">
+    <form action="/search" method="get" class="flex items-center gap-2" role="search">
+      <Search class="w-5 h-5 text-(--color-ink-500) flex-none" />
+      <input
+        type="search"
+        name="q"
+        placeholder="Search articles, judgments, news…"
+        autocomplete="off"
+        class="flex-1 bg-transparent outline-none border-0 font-serif text-lg placeholder:text-(--color-ink-400) text-(--color-ink-900)"
+      />
+      <button
+        type="button"
+        id="il-search-close"
+        aria-label="Close search"
+        class="tap w-9 h-9 inline-flex items-center justify-center rounded-full text-(--color-ink-500) hover:bg-(--color-ink-100)"
+      >
+        <X class="w-5 h-5" />
+      </button>
+    </form>
+
+    <div id="il-search-results" class="mt-4 space-y-2 hidden">
+      <p class="text-sm text-(--color-ink-500) font-sans" id="il-search-status">Type to search.</p>
+      <ul id="il-search-list" class="divide-y divide-(--color-ink-200)"></ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  const panel = document.getElementById("il-search-panel")!;
+  const close = document.getElementById("il-search-close")!;
+  const input = panel.querySelector<HTMLInputElement>("input[name='q']")!;
+  const results = document.getElementById("il-search-results")!;
+  const status = document.getElementById("il-search-status")!;
+  const list = document.getElementById("il-search-list")!;
+
+  function setOpen(open: boolean) {
+    panel.dataset.open = open ? "true" : "false";
+    panel.style.maxHeight = open ? `${panel.scrollHeight + 320}px` : "0";
+    if (!open) {
+      results.classList.add("hidden");
+      list.innerHTML = "";
+    }
+  }
+
+  close.addEventListener("click", () => setOpen(false));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && panel.dataset.open === "true") setOpen(false);
+    if (e.key === "/" && document.activeElement?.tagName !== "INPUT") {
+      e.preventDefault();
+      setOpen(true);
+      setTimeout(() => input.focus(), 60);
+    }
+  });
+
+  let abortCtrl: AbortController | null = null;
+  let debounce: ReturnType<typeof setTimeout> | null = null;
+  input.addEventListener("input", () => {
+    const q = input.value.trim();
+    if (debounce) clearTimeout(debounce);
+    if (!q) {
+      results.classList.add("hidden");
+      list.innerHTML = "";
+      return;
+    }
+    results.classList.remove("hidden");
+    status.textContent = "Searching…";
+    list.innerHTML = "";
+    debounce = setTimeout(async () => {
+      abortCtrl?.abort();
+      abortCtrl = new AbortController();
+      try {
+        const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`, {
+          signal: abortCtrl.signal,
+        });
+        const data = await res.json();
+        const items: Array<{ title: string; url: string; type: string; excerpt?: string }> =
+          data.results ?? [];
+        if (!items.length) {
+          status.textContent = `No results for “${q}”.`;
+          return;
+        }
+        status.textContent = `${items.length} result${items.length === 1 ? "" : "s"}`;
+        list.innerHTML = items
+          .map(
+            (it) => `
+              <li class="py-3">
+                <a href="${it.url}" class="block group">
+                  <p class="text-xs uppercase tracking-wider text-(--color-brand-500) font-sans font-semibold">${it.type}</p>
+                  <p class="font-serif text-lg text-(--color-ink-900) group-hover:text-(--color-brand-500) transition-colors">${it.title}</p>
+                  ${it.excerpt ? `<p class="mt-1 text-sm text-(--color-ink-600)">${it.excerpt}</p>` : ""}
+                </a>
+              </li>
+            `,
+          )
+          .join("");
+      } catch (err) {
+        if ((err as Error).name === "AbortError") return;
+        status.textContent = "Search failed. Try again.";
+      }
+    }, 220);
+  });
+</script>

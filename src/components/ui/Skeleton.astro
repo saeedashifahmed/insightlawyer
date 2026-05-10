@@ -1,0 +1,16 @@
+---
+interface Props {
+  height?: string;
+  width?: string;
+  rounded?: "sm" | "md" | "lg" | "full";
+  class?: string;
+}
+
+const { height = "1rem", width = "100%", rounded = "sm", class: cls = "" } = Astro.props as Props;
+const radius = { sm: "rounded-sm", md: "rounded-md", lg: "rounded-lg", full: "rounded-full" }[rounded];
+---
+<span
+  class={`skeleton block ${radius} ${cls}`}
+  style={`height:${height};width:${width};`}
+  aria-hidden="true"
+></span>

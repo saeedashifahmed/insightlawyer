@@ -1,0 +1,10 @@
+---
+import type { WPPost } from "@lib/wp/types";
+import PostCardMedium from "@components/cards/PostCardMedium.astro";
+
+interface Props { posts: WPPost[]; }
+const { posts } = Astro.props as Props;
+---
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+  {posts.map((p) => <PostCardMedium post={p} />)}
+</div>

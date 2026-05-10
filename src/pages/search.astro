@@ -1,0 +1,103 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import BreadcrumbBar from "@components/layout/BreadcrumbBar.astro";
+import { Search as SearchIcon } from "@lucide/astro";
+
+const q = (Astro.url.searchParams.get("q") ?? "").trim();
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "Search" },
+];
+---
+<BaseLayout title={q ? `Search: ${q}` : "Search"} description="Search articles, judgments, and news on Insight Lawyer." noindex={!q}>
+  <BreadcrumbBar items={breadcrumbs} />
+  <div class="container-wide py-8 md:py-14">
+    <header class="max-w-2xl">
+      <span class="kicker">Search</span>
+      <h1 class="mt-2 font-serif text-3xl md:text-5xl font-semibold text-(--color-ink-900)">
+        {q ? `Results for “${q}”` : "What are you looking for?"}
+      </h1>
+      <span class="gold-rule mt-5"></span>
+    </header>
+
+    <form action="/search" method="get" role="search" class="mt-6 max-w-2xl flex items-center gap-2 border border-(--color-ink-200) rounded-md px-4 py-3 bg-(--color-paper) focus-within:border-(--color-ink-500) transition-colors">
+      <SearchIcon class="w-5 h-5 text-(--color-ink-500) flex-none" />
+      <input
+        type="search"
+        name="q"
+        autofocus
+        value={q}
+        placeholder="Search Insight Lawyer…"
+        class="flex-1 bg-transparent outline-none border-0 font-serif text-lg placeholder:text-(--color-ink-400) text-(--color-ink-900)"
+      />
+      <button type="submit" class="tap px-4 py-1.5 rounded-md bg-(--color-ink-900) text-(--color-paper) text-sm font-sans font-semibold">Search</button>
+    </form>
+
+    <div id="il-search-app" class="mt-10 max-w-3xl" data-q={q}>
+      {q ? (
+        <div id="il-search-loading" class="space-y-4">
+          {Array.from({ length: 4 }).map(() => (
+            <div class="space-y-2">
+              <span class="skeleton block h-3 w-24"></span>
+              <span class="skeleton block h-6 w-3/4"></span>
+              <span class="skeleton block h-4 w-2/3"></span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+          <a href="/category/constitutional" class="tap card p-4 hover:bg-(--color-paper-2)"><span class="kicker">Try</span><p class="font-serif text-lg mt-1">Constitutional</p></a>
+          <a href="/category/criminal" class="tap card p-4 hover:bg-(--color-paper-2)"><span class="kicker">Try</span><p class="font-serif text-lg mt-1">Criminal</p></a>
+          <a href="/category/corporate" class="tap card p-4 hover:bg-(--color-paper-2)"><span class="kicker">Try</span><p class="font-serif text-lg mt-1">Corporate</p></a>
+        </div>
+      )}
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const root = document.getElementById("il-search-app");
+  const loading = document.getElementById("il-search-loading");
+  const q = root?.dataset.q?.trim();
+  if (q && root) {
+    fetch(`/api/search?q=${encodeURIComponent(q)}`)
+      .then((r) => r.json())
+      .then((data) => {
+        loading?.remove();
+        const groups: Record<string, Array<{ title: string; url: string; excerpt?: string }>> = {};
+        for (const item of data.results ?? []) {
+          (groups[item.type] ??= []).push(item);
+        }
+        if (!Object.keys(groups).length) {
+          root.innerHTML = `<p class="text-(--color-ink-600)">No results for <span class="font-semibold text-(--color-ink-900)">“${q}”</span>. Try a broader keyword.</p>`;
+          return;
+        }
+        const labels: Record<string, string> = { post: "Articles", news: "News", page: "Pages" };
+        root.innerHTML = Object.entries(groups)
+          .map(
+            ([key, items]) => `
+            <section class="mt-8">
+              <h2 class="kicker mb-3">${labels[key] ?? key}</h2>
+              <ul class="divide-y divide-(--color-ink-200)">
+                ${items
+                  .map(
+                    (it) => `
+                  <li class="py-4">
+                    <a href="${it.url}" class="block group">
+                      <p class="font-serif text-xl text-(--color-ink-900) group-hover:text-(--color-brand-600) transition-colors">${it.title}</p>
+                      ${it.excerpt ? `<p class="mt-1 text-sm text-(--color-ink-600)">${it.excerpt}</p>` : ""}
+                    </a>
+                  </li>`,
+                  )
+                  .join("")}
+              </ul>
+            </section>
+          `,
+          )
+          .join("");
+      })
+      .catch(() => {
+        if (loading) loading.innerHTML = `<p class="text-(--color-danger)">Search failed. Please try again.</p>`;
+      });
+  }
+</script>

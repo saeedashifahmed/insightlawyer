@@ -1,0 +1,24 @@
+---
+import { cn } from "@lib/utils/cn";
+
+interface Props {
+  href?: string;
+  active?: boolean;
+  class?: string;
+}
+
+const { href, active = false, class: cls } = Astro.props as Props;
+
+const styles = cn(
+  "tap inline-flex items-center justify-center px-3.5 py-1.5 rounded-full text-sm font-sans font-medium border transition-colors duration-200",
+  active
+    ? "bg-(--color-ink-900) text-(--color-paper) border-(--color-ink-900)"
+    : "bg-(--color-paper) text-(--color-ink-700) border-(--color-ink-200) hover:border-(--color-ink-400) hover:text-(--color-ink-900)",
+  cls,
+);
+---
+{href ? (
+  <a href={href} class={styles}><slot /></a>
+) : (
+  <span class={styles}><slot /></span>
+)}

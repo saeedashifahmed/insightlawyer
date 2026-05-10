@@ -1,0 +1,73 @@
+---
+import { ChevronLeft, ChevronRight } from "@lucide/astro";
+
+interface Props {
+  /** Current page (1-based). */
+  current: number;
+  /** Total pages, if known. */
+  total?: number;
+  /** Function to build href for a given page (1-based). */
+  hrefFor: (page: number) => string;
+  hasNext?: boolean;
+  hasPrev?: boolean;
+}
+
+const { current, total, hrefFor, hasNext, hasPrev } = Astro.props as Props;
+
+const showWindow = (() => {
+  if (!total) return null;
+  const window: number[] = [];
+  const start = Math.max(1, current - 2);
+  const end = Math.min(total, current + 2);
+  for (let i = start; i <= end; i++) window.push(i);
+  return window;
+})();
+
+const prev = current > 1 || hasPrev;
+const next = (total && current < total) || hasNext;
+---
+<nav class="flex items-center justify-center gap-1.5 mt-10" aria-label="Pagination">
+  <a
+    href={prev ? hrefFor(current - 1) : "#"}
+    class={`tap inline-flex items-center justify-center w-11 h-11 rounded-full border transition-colors ${
+      prev
+        ? "border-(--color-ink-200) text-(--color-ink-700) hover:border-(--color-ink-500)"
+        : "border-(--color-ink-100) text-(--color-ink-300) pointer-events-none"
+    }`}
+    aria-label="Previous page"
+    aria-disabled={!prev}
+  >
+    <ChevronLeft class="w-5 h-5" />
+  </a>
+
+  {showWindow?.map((p) => (
+    <a
+      href={hrefFor(p)}
+      class={`tap min-w-11 h-11 px-3 inline-flex items-center justify-center rounded-full text-sm font-sans font-semibold transition-colors ${
+        p === current
+          ? "bg-(--color-ink-900) text-(--color-paper)"
+          : "border border-(--color-ink-200) text-(--color-ink-700) hover:border-(--color-ink-500)"
+      }`}
+      aria-current={p === current ? "page" : undefined}
+    >
+      {p}
+    </a>
+  ))}
+
+  {!showWindow && (
+    <span class="px-3 text-sm font-sans text-(--color-ink-500)">Page {current}</span>
+  )}
+
+  <a
+    href={next ? hrefFor(current + 1) : "#"}
+    class={`tap inline-flex items-center justify-center w-11 h-11 rounded-full border transition-colors ${
+      next
+        ? "border-(--color-ink-200) text-(--color-ink-700) hover:border-(--color-ink-500)"
+        : "border-(--color-ink-100) text-(--color-ink-300) pointer-events-none"
+    }`}
+    aria-label="Next page"
+    aria-disabled={!next}
+  >
+    <ChevronRight class="w-5 h-5" />
+  </a>
+</nav>

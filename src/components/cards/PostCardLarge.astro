@@ -1,0 +1,53 @@
+---
+import type { WPPost } from "@lib/wp/types";
+import { formatDateShort } from "@lib/utils/date";
+import { readingTimeMinutes } from "@lib/utils/reading-time";
+import { cleanWpExcerpt, makeExcerpt } from "@lib/utils/excerpt";
+import { postPath } from "@lib/wp/url";
+
+interface Props {
+  post: WPPost;
+  imgPriority?: boolean;
+}
+const { post, imgPriority = false } = Astro.props as Props;
+const cat = post.categories?.nodes?.[0];
+const img = post.featuredImage?.node;
+const minutes = readingTimeMinutes(post.content ?? post.excerpt);
+const deck = makeExcerpt(cleanWpExcerpt(post.excerpt) || post.content, 140);
+---
+<article class="group card-lift">
+  <a href={postPath(post.slug)} class="block" transition:name={`post-${post.slug}`}>
+    {img?.sourceUrl && (
+      <div class="img-zoom relative border border-(--color-ink-200) bg-(--color-paper-2) aspect-[16/10]" transition:name={`hero-${post.slug}`}>
+        <img
+          src={img.sourceUrl}
+          alt={img.altText ?? post.title}
+          loading={imgPriority ? "eager" : "lazy"}
+          fetchpriority={imgPriority ? "high" : undefined}
+          decoding="async"
+        />
+        {cat && (
+          <div class="absolute top-3 left-3 z-10">
+            <span class="pill-cat pill-cat-solid">{cat.name}</span>
+          </div>
+        )}
+      </div>
+    )}
+    <div class="mt-5">
+      {cat && !img && (
+        <span class="kicker-dot">{cat.name}</span>
+      )}
+      <h3 class="font-serif text-2xl md:text-[1.7rem] font-semibold text-(--color-ink-900) leading-[1.15] tracking-[-0.01em] group-hover:text-(--color-brand-700) transition-colors duration-300" transition:name={`title-${post.slug}`}>
+        {post.title}
+      </h3>
+      {deck && <p class="mt-3 text-(--color-ink-600) text-[0.96rem] leading-relaxed line-clamp-3">{deck}</p>}
+      <div class="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-sans text-(--color-ink-500)">
+        {post.author?.node?.name && <span class="text-(--color-ink-800) font-semibold">{post.author.node.name}</span>}
+        {post.date && <span class="meta-dot" aria-hidden="true"></span>}
+        {post.date && <time datetime={post.date}>{formatDateShort(post.date)}</time>}
+        <span class="meta-dot" aria-hidden="true"></span>
+        <span>{minutes} min</span>
+      </div>
+    </div>
+  </a>
+</article>

@@ -1,0 +1,33 @@
+---
+import FallbackSeo from "./FallbackSeo.astro";
+import { getRankMathHead } from "@lib/wp/seo";
+
+interface Props {
+  /** Absolute URL of the current page (canonical). */
+  url: string;
+  /** Fallback values rendered if RankMath head fetch fails. */
+  fallback?: {
+    title?: string;
+    description?: string;
+    image?: string;
+    type?: "website" | "article";
+    publishedTime?: string;
+    modifiedTime?: string;
+    noindex?: boolean;
+  };
+}
+
+const { url, fallback } = Astro.props as Props;
+
+let head: string | null = null;
+try {
+  head = await getRankMathHead(url);
+} catch {
+  head = null;
+}
+---
+{head ? (
+  <Fragment set:html={head} />
+) : (
+  <FallbackSeo canonical={url} {...(fallback ?? {})} />
+)}

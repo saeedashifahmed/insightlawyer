@@ -1,0 +1,134 @@
+---
+import { X, Sun, Moon, ChevronRight } from "@lucide/astro";
+
+const SECTIONS = [
+  { label: "Home", href: "/" },
+  { label: "Latest News", href: "/news" },
+  { label: "All Articles", href: "/blog" },
+  { label: "Constitutional Law", href: "/category/constitutional" },
+  { label: "Criminal Law", href: "/category/criminal" },
+  { label: "Civil Law", href: "/category/civil" },
+  { label: "Corporate Law", href: "/category/corporate" },
+  { label: "Tax Law", href: "/category/tax" },
+  { label: "IP Law", href: "/category/ip" },
+  { label: "Family Law", href: "/category/family" },
+  { label: "Labor Law", href: "/category/labor" },
+];
+
+const ABOUT = [
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
+  { label: "Privacy", href: "/privacy" },
+  { label: "Disclaimer", href: "/disclaimer" },
+];
+---
+<div
+  id="il-drawer-backdrop"
+  class="fixed inset-0 z-[60] bg-(--color-ink-900)/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-200 data-[open=true]:opacity-100 data-[open=true]:pointer-events-auto"
+  data-open="false"
+></div>
+
+<aside
+  id="il-drawer"
+  data-open="false"
+  class="fixed inset-y-0 left-0 z-[70] w-[88%] max-w-sm bg-(--color-paper) shadow-[var(--shadow-pop)] -translate-x-full transition-transform duration-[280ms] ease-[cubic-bezier(0.22,1,0.36,1)] data-[open=true]:translate-x-0"
+  aria-hidden="true"
+  style="padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); overscroll-behavior: contain;"
+>
+  <div class="flex items-center justify-between px-5 py-4 border-b border-(--color-ink-200)">
+    <a href="/" class="tap inline-flex items-center gap-3">
+      <span class="relative inline-flex flex-col items-center justify-center w-10 h-10 rounded-sm bg-(--color-brand-700) ring-1 ring-(--color-brand-800)/40">
+        <span class="font-serif font-semibold text-(--color-gold-300) text-[15px] leading-none tracking-[0.02em] -mb-1">IL</span>
+        <span class="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-px bg-(--color-gold-400)"></span>
+      </span>
+      <span class="flex flex-col leading-none">
+        <span class="font-serif text-lg font-semibold text-(--color-ink-900) tracking-tight">Insight Lawyer</span>
+        <span class="mt-1 font-sans text-[9px] uppercase tracking-[0.22em] text-(--color-ink-500) font-medium">Indian Legal Journal</span>
+      </span>
+    </a>
+    <button
+      type="button"
+      id="il-drawer-close"
+      aria-label="Close menu"
+      class="tap w-10 h-10 inline-flex items-center justify-center rounded-full text-(--color-ink-700) hover:bg-(--color-ink-100)"
+    >
+      <X class="w-5 h-5" />
+    </button>
+  </div>
+
+  <nav class="overflow-y-auto h-full pb-20" aria-label="Mobile drawer">
+    <ul class="py-2">
+      {SECTIONS.map((s) => (
+        <li>
+          <a
+            href={s.href}
+            class="tap flex items-center justify-between px-5 py-3 text-(--color-ink-900) font-serif text-lg hover:bg-(--color-paper-2) transition-colors"
+          >
+            <span>{s.label}</span>
+            <ChevronRight class="w-4 h-4 text-(--color-ink-400)" />
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div class="hairline mx-5 my-2"></div>
+    <ul class="py-2">
+      {ABOUT.map((s) => (
+        <li>
+          <a
+            href={s.href}
+            class="tap block px-5 py-2.5 text-(--color-ink-700) text-[0.94rem] hover:text-(--color-ink-900)"
+          >
+            {s.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div class="hairline mx-5 my-2"></div>
+    <button
+      type="button"
+      id="il-drawer-theme"
+      class="tap flex items-center gap-3 px-5 py-3 w-full text-left text-(--color-ink-700) hover:bg-(--color-paper-2)"
+    >
+      <Sun class="w-5 h-5 hidden dark:block" />
+      <Moon class="w-5 h-5 dark:hidden" />
+      <span>Toggle theme</span>
+    </button>
+  </nav>
+</aside>
+
+<script>
+  const drawer = document.getElementById("il-drawer")!;
+  const backdrop = document.getElementById("il-drawer-backdrop")!;
+  const closeBtn = document.getElementById("il-drawer-close")!;
+  const themeBtn = document.getElementById("il-drawer-theme")!;
+
+  function close() {
+    drawer.setAttribute("data-open", "false");
+    drawer.setAttribute("aria-hidden", "true");
+    backdrop.setAttribute("data-open", "false");
+    document.body.style.overflow = "";
+  }
+  closeBtn.addEventListener("click", close);
+  backdrop.addEventListener("click", close);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && drawer.dataset.open === "true") close();
+  });
+  // Re-show aria-hidden=false when opened
+  new MutationObserver(() => {
+    drawer.setAttribute("aria-hidden", drawer.dataset.open === "true" ? "false" : "true");
+  }).observe(drawer, { attributes: true, attributeFilter: ["data-open"] });
+
+  themeBtn.addEventListener("click", () => {
+    const root = document.documentElement;
+    const isDark = root.classList.contains("dark");
+    if (isDark) {
+      root.classList.remove("dark");
+      root.classList.add("light");
+      localStorage.setItem("il-theme", "light");
+    } else {
+      root.classList.remove("light");
+      root.classList.add("dark");
+      localStorage.setItem("il-theme", "dark");
+    }
+  });
+</script>

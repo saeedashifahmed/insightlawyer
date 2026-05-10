@@ -1,0 +1,21 @@
+{
+  "post": {
+    "__typename": "Post",
+    "id": "news-1",
+    "slug": "live-supreme-court-collegium-recommendations",
+    "uri": "/news/live-supreme-court-collegium-recommendations",
+    "title": "Live: Supreme Court collegium recommends six names for High Court appointments",
+    "excerpt": "<p>Updates from the collegium meeting are expected through the day. The list is awaited.</p>",
+    "content": "<p>The Supreme Court collegium met today and recommended six names for High Court appointments. The full list is being collated by the Department of Justice and will be communicated to the President in the usual course.</p><p>The collegium also considered three transfer requests; one was approved.</p>",
+    "date": "2025-04-22T07:00:00",
+    "modified": "2025-04-22T09:00:00",
+    "featuredImage": {
+      "node": {
+        "sourceUrl": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1600",
+        "altText": "Supreme Court of India press briefing room"
+      }
+    },
+    "author": { "node": { "name": "Rohan Iyer", "slug": "rohan-iyer", "avatar": { "url": "https://i.pravatar.cc/120?u=rohan" } } },
+    "categories": { "nodes": [{ "name": "News", "slug": "news" }] }
+  }
+}

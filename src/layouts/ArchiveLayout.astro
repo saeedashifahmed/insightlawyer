@@ -1,0 +1,36 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import BreadcrumbBar from "@components/layout/BreadcrumbBar.astro";
+
+interface Props {
+  title: string;
+  kicker?: string;
+  description?: string;
+  count?: number;
+  breadcrumbs?: Array<{ label: string; href?: string }>;
+  canonical?: string;
+}
+
+const { title, kicker, description, count, breadcrumbs, canonical } = Astro.props as Props;
+---
+<BaseLayout title={title} description={description} canonical={canonical}>
+  {breadcrumbs && breadcrumbs.length > 0 && <BreadcrumbBar items={breadcrumbs} />}
+  <header class="container-wide pt-8 md:pt-14 pb-6 md:pb-10">
+    {kicker && <span class="kicker">{kicker}</span>}
+    <h1 class="mt-2 font-serif text-3xl md:text-5xl font-semibold text-(--color-ink-900) leading-[1.1]">
+      {title}
+    </h1>
+    {description && (
+      <p class="mt-3 text-lg text-(--color-ink-600) max-w-prose">{description}</p>
+    )}
+    {typeof count === "number" && (
+      <p class="mt-4 text-sm text-(--color-ink-500) font-sans">
+        {count.toLocaleString("en-IN")} article{count === 1 ? "" : "s"}
+      </p>
+    )}
+    <span class="gold-rule mt-5"></span>
+  </header>
+  <div class="container-wide pb-16">
+    <slot />
+  </div>
+</BaseLayout>

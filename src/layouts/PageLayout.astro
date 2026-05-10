@@ -1,0 +1,31 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import BreadcrumbBar from "@components/layout/BreadcrumbBar.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  breadcrumbs?: Array<{ label: string; href?: string }>;
+  noindex?: boolean;
+  canonical?: string;
+}
+
+const { title, description, breadcrumbs, noindex, canonical } = Astro.props as Props;
+---
+<BaseLayout title={title} description={description} noindex={noindex} canonical={canonical}>
+  {breadcrumbs && breadcrumbs.length > 0 && <BreadcrumbBar items={breadcrumbs} />}
+  <article class="container-wide py-10 md:py-16">
+    <header class="mb-8 max-w-3xl">
+      <h1 class="font-serif text-4xl md:text-5xl font-semibold text-(--color-ink-900) leading-tight">
+        {title}
+      </h1>
+      {description && (
+        <p class="mt-4 text-lg text-(--color-ink-600) max-w-prose">{description}</p>
+      )}
+      <span class="gold-rule mt-6"></span>
+    </header>
+    <div class="prose mx-auto">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

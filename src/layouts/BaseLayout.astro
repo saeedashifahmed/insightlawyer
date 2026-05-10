@@ -1,0 +1,176 @@
+---
+import "@fontsource-variable/fraunces";
+import "@fontsource-variable/inter";
+import "@fontsource-variable/jetbrains-mono";
+import "../styles/global.css";
+
+import { ClientRouter } from "astro:transitions";
+import RankMathHead from "@components/seo/RankMathHead.astro";
+import Header from "@components/layout/Header.astro";
+import Footer from "@components/layout/Footer.astro";
+import MobileBottomNav from "@components/layout/MobileBottomNav.astro";
+import MobileDrawer from "@components/layout/MobileDrawer.astro";
+import BackToTop from "@components/layout/BackToTop.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: "website" | "article";
+  publishedTime?: string;
+  modifiedTime?: string;
+  noindex?: boolean;
+  /** When true, the bottom mobile nav is rendered. Default true. */
+  mobileBottomNav?: boolean;
+  /** When true, the back-to-top button is rendered. Default true. */
+  backToTop?: boolean;
+  /** Optional override of canonical URL. */
+  canonical?: string;
+  /** Render as a wide page (no max-width). */
+  wide?: boolean;
+  /** Body class for theming exceptions. */
+  bodyClass?: string;
+}
+
+const SITE_URL = (import.meta.env.PUBLIC_SITE_URL ?? "https://insightlawyer.in").replace(/\/$/, "");
+
+const {
+  title,
+  description,
+  image,
+  type = "website",
+  publishedTime,
+  modifiedTime,
+  noindex = false,
+  mobileBottomNav = true,
+  backToTop = true,
+  canonical,
+  bodyClass = "",
+} = Astro.props as Props;
+
+const url = canonical ?? `${SITE_URL}${Astro.url.pathname}`;
+---
+<!doctype html>
+<html lang="en-IN" data-theme="auto">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0d0d0c" media="(prefers-color-scheme: dark)" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Insight Lawyer" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <link rel="preconnect" href="https://cms.insightlawyer.in" crossorigin />
+    <link rel="dns-prefetch" href="https://cms.insightlawyer.in" />
+
+    {/* Theme bootstrap — runs before paint to avoid flash */}
+    <script is:inline>
+      (function(){
+        try {
+          var stored = localStorage.getItem("il-theme");
+          if (stored === "dark") document.documentElement.classList.add("dark");
+          else if (stored === "light") document.documentElement.classList.add("light");
+        } catch (e) {}
+      })();
+    </script>
+
+    {/* RankMath head is the source of truth for content pages.
+        On non-content pages, FallbackSeo (rendered inside RankMathHead) covers it. */}
+    <RankMathHead
+      url={url}
+      fallback={{
+        title,
+        description,
+        image,
+        type,
+        publishedTime,
+        modifiedTime,
+        noindex,
+      }}
+    />
+
+    <ClientRouter fallback="swap" />
+  </head>
+  <body class={bodyClass}>
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[200] focus:bg-(--color-brand-500) focus:text-(--color-paper) focus:px-3 focus:py-2 focus:rounded">
+      Skip to content
+    </a>
+
+    <Header />
+    <MobileDrawer />
+
+    <main id="main" class="min-h-[60vh]">
+      <slot />
+    </main>
+
+    <Footer />
+    {mobileBottomNav && <MobileBottomNav />}
+    {backToTop && <BackToTop />}
+
+    <script>
+      // Bottom-sheet open/close glue used by share sheets, drawers, category pickers.
+      // Vanilla — no framework cost.
+      document.addEventListener("click", (ev) => {
+        const target = ev.target as HTMLElement | null;
+        if (!target) return;
+        const opener = target.closest<HTMLElement>("[data-sheet-open]");
+        const closer = target.closest<HTMLElement>("[data-sheet-close]");
+        if (opener) {
+          const id = opener.getAttribute("data-sheet-open")!;
+          const sheet = document.getElementById(id);
+          const backdrop = document.getElementById(`${id}-backdrop`);
+          sheet?.setAttribute("data-open", "true");
+          backdrop?.setAttribute("data-open", "true");
+          document.body.style.overflow = "hidden";
+        }
+        if (closer) {
+          const sheet = closer.closest<HTMLElement>(".sheet");
+          const id = sheet?.id;
+          if (id) {
+            sheet?.removeAttribute("data-open");
+            document.getElementById(`${id}-backdrop`)?.removeAttribute("data-open");
+          }
+          document.body.style.overflow = "";
+        }
+      });
+
+      document.addEventListener("keydown", (ev) => {
+        if (ev.key !== "Escape") return;
+        for (const s of document.querySelectorAll<HTMLElement>(".sheet[data-open='true']")) {
+          s.removeAttribute("data-open");
+          document.getElementById(`${s.id}-backdrop`)?.removeAttribute("data-open");
+        }
+        document.body.style.overflow = "";
+      });
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  /* Tailwind v4 visually-hidden helper */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .focus\:not-sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+</style>

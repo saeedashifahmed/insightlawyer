@@ -1,0 +1,27 @@
+---
+interface Citation {
+  text: string;
+  url?: string;
+}
+interface Props {
+  title?: string;
+  items: Citation[];
+}
+const { title = "Citations", items } = Astro.props as Props;
+---
+{items.length > 0 && (
+  <section class="mt-8 max-w-prose mx-auto">
+    <h3 class="kicker mb-3">{title}</h3>
+    <ol class="list-decimal pl-5 space-y-1.5 text-sm font-sans text-(--color-ink-700)">
+      {items.map((c) => (
+        <li>
+          {c.url ? (
+            <a href={c.url} class="text-(--color-brand-600) hover:text-(--color-brand-500) transition-colors" rel="noopener noreferrer" target="_blank">{c.text}</a>
+          ) : (
+            <span>{c.text}</span>
+          )}
+        </li>
+      ))}
+    </ol>
+  </section>
+)}

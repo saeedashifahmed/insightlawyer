@@ -1,0 +1,23 @@
+---
+import { ChevronDown } from "@lucide/astro";
+
+interface Props {
+  summary: string;
+  open?: boolean;
+  class?: string;
+}
+
+const { summary, open = false, class: cls = "" } = Astro.props as Props;
+---
+<details class={`group border-y border-(--color-ink-200) ${cls}`} open={open}>
+  <summary class="flex items-center justify-between cursor-pointer list-none py-3 font-sans font-semibold text-(--color-ink-900)">
+    <span>{summary}</span>
+    <ChevronDown class="w-5 h-5 text-(--color-ink-500) transition-transform duration-200 group-open:rotate-180" />
+  </summary>
+  <div class="pb-4 text-(--color-ink-700) text-[0.94rem] leading-relaxed">
+    <slot />
+  </div>
+</details>
+<style>
+  summary::-webkit-details-marker { display: none; }
+</style>

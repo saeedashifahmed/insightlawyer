@@ -1,0 +1,12 @@
+{
+  "user": {
+    "id": "user-1",
+    "databaseId": 2,
+    "name": "Aanya Mehra",
+    "slug": "aanya-mehra",
+    "description": "Aanya Mehra covers the Supreme Court for Insight Lawyer. She previously practised commercial litigation at the Delhi High Court and clerked at the Supreme Court of India.",
+    "uri": "/author/aanya-mehra",
+    "avatar": { "url": "https://i.pravatar.cc/200?u=aanya" },
+    "roles": { "nodes": [{ "displayName": "Senior Reporter", "name": "author" }] }
+  }
+}

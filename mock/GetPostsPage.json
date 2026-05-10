@@ -1,0 +1,79 @@
+{
+  "posts": {
+    "pageInfo": { "hasNextPage": true, "hasPreviousPage": false, "endCursor": "cursor-12", "startCursor": "cursor-1" },
+    "nodes": [
+      {
+        "__typename": "Post",
+        "id": "post-1",
+        "slug": "constitutional-bench-clarifies-test-on-equal-pay",
+        "title": "Constitutional Bench clarifies the test on equal pay for equal work",
+        "excerpt": "<p>The Supreme Court's five-judge bench has, in a rare unanimous ruling, redrawn the contours of Article 39(d).</p>",
+        "content": "",
+        "date": "2025-04-22T09:30:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=1200", "altText": "Supreme Court" } },
+        "author": { "node": { "name": "Aanya Mehra", "slug": "aanya-mehra" } },
+        "categories": { "nodes": [{ "name": "Constitutional", "slug": "constitutional" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "post-2",
+        "slug": "delhi-hc-on-section-498a",
+        "title": "Delhi High Court tightens the screws on misuse of Section 498A",
+        "excerpt": "<p>A division bench has issued binding directions to the Delhi Police, requiring preliminary inquiry before arrest.</p>",
+        "content": "",
+        "date": "2025-04-21T18:00:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=1200" } },
+        "author": { "node": { "name": "Rohan Iyer", "slug": "rohan-iyer" } },
+        "categories": { "nodes": [{ "name": "Criminal", "slug": "criminal" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "post-3",
+        "slug": "gst-council-43rd-meeting-takeaways",
+        "title": "GST Council's 43rd meeting: five takeaways for tax counsel",
+        "excerpt": "<p>Rate rationalisation on essentials, two new compliance windows, and a long-pending clarification on intermediary services.</p>",
+        "content": "",
+        "date": "2025-04-21T08:45:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1554224155-1696413565d3?w=1200" } },
+        "author": { "node": { "name": "Priya Banerjee", "slug": "priya-banerjee" } },
+        "categories": { "nodes": [{ "name": "Tax", "slug": "tax" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "post-4",
+        "slug": "competition-commission-tightens-merger-thresholds",
+        "title": "Competition Commission tightens merger thresholds for digital deals",
+        "excerpt": "<p>A new circular catches deal value-based notifications under Section 5 of the Competition Act.</p>",
+        "content": "",
+        "date": "2025-04-20T14:00:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200" } },
+        "author": { "node": { "name": "Vikram Saxena", "slug": "vikram-saxena" } },
+        "categories": { "nodes": [{ "name": "Corporate", "slug": "corporate" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "post-5",
+        "slug": "patent-office-issues-fresh-guidelines-on-cii",
+        "title": "Patent Office issues fresh guidelines on computer-related inventions",
+        "excerpt": "<p>The 2025 CRI guidelines walk back the technical-effect requirement.</p>",
+        "content": "",
+        "date": "2025-04-19T11:30:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200" } },
+        "author": { "node": { "name": "Kabir Joshi", "slug": "kabir-joshi" } },
+        "categories": { "nodes": [{ "name": "IP", "slug": "ip" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "post-6",
+        "slug": "supreme-court-on-arbitration-act-amendment",
+        "title": "Supreme Court reads down the 2024 arbitration amendment",
+        "excerpt": "<p>A three-judge bench has narrowed the scope of the 2024 amendment to Section 11.</p>",
+        "content": "",
+        "date": "2025-04-18T16:20:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200" } },
+        "author": { "node": { "name": "Aanya Mehra", "slug": "aanya-mehra" } },
+        "categories": { "nodes": [{ "name": "Civil", "slug": "civil" }] }
+      }
+    ]
+  }
+}

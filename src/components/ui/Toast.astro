@@ -1,0 +1,25 @@
+---
+/** Lightweight toast — invoked by `window.dispatchEvent(new CustomEvent('il-toast', { detail: 'Saved' }))`. */
+---
+<div
+  id="il-toast"
+  role="status"
+  aria-live="polite"
+  class="fixed bottom-24 md:bottom-6 left-1/2 -translate-x-1/2 z-[90] pointer-events-none opacity-0 transition-opacity duration-200"
+>
+  <div class="px-4 py-2.5 rounded-full bg-(--color-ink-900) text-(--color-paper) text-sm font-sans font-medium shadow-[var(--shadow-pop)]">
+    <span id="il-toast-text">Saved</span>
+  </div>
+</div>
+<script>
+  const root = document.getElementById("il-toast")!;
+  const text = document.getElementById("il-toast-text")!;
+  let timer: ReturnType<typeof setTimeout> | null = null;
+  window.addEventListener("il-toast", ((e: Event) => {
+    const detail = (e as CustomEvent<string>).detail ?? "Saved";
+    text.textContent = detail;
+    root.style.opacity = "1";
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => { root.style.opacity = "0"; }, 1800);
+  }) as EventListener);
+</script>

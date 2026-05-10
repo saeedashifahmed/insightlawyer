@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "insight-lawyer-dev",
+      "runtimeExecutable": "/Users/saeedashifahmed/.nvm/versions/node/v22.22.2/bin/pnpm",
+      "runtimeArgs": ["dev"],
+      "port": 4321
+    }
+  ]
+}

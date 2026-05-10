@@ -1,0 +1,53 @@
+{
+  "post": {
+    "__typename": "Post",
+    "id": "post-1",
+    "databaseId": 1,
+    "slug": "constitutional-bench-clarifies-test-on-equal-pay",
+    "uri": "/constitutional-bench-clarifies-test-on-equal-pay",
+    "title": "Constitutional Bench clarifies the test on equal pay for equal work",
+    "excerpt": "<p>The Supreme Court's five-judge bench has, in a rare unanimous ruling, redrawn the contours of Article 39(d). Here's what changes for public-sector employers and the government's salary review mechanism.</p>",
+    "content": "<p>The Supreme Court of India has handed down a 187-page ruling that settles a question that has divided High Courts for over a decade. The bench — comprising the Chief Justice and four senior puisne judges — read down Section 16 of the Industrial Disputes Act for narrow application, and articulated a fresh, three-part test for claims of equal pay for equal work in the public sector.</p>\n\n<h2>What the bench decided</h2>\n\n<p>Article 39(d) is a directive principle, but the Court held it informs the equality guarantee under Article 14 and Article 16. The test articulated in <em>Randhir Singh v. Union of India</em>, AIR 1973 SC 1461, stands modified. The Court has now laid out three cumulative conditions that a claimant must satisfy.</p>\n\n<p>First, the work compared must be substantially similar in nature, responsibility, and skill. The earlier formulation, which extended to \"reasonably comparable\" work, has been narrowed.</p>\n\n<p>Second, the comparator must be in the same employer. Cross-employer comparisons under the same Government remain available only where there is a direct functional or organisational link.</p>\n\n<p>Third, the differential must be irrational on the face of the record — that is, unjustifiable on any reasonable governmental policy ground.</p>\n\n<blockquote class=\"pullquote\">The directive principles inform the equality clause; they do not replace it. Section 16 of the IDA cannot be read as a charter for indiscriminate parity claims.</blockquote>\n\n<h2>Why the change</h2>\n\n<p>For practitioners, the most consequential portion of the judgment is paragraphs 122 to 148, where the Court reviews the litigation history of equal-pay claims since 1973. The Court records that of 412 reported decisions, 268 turned on the lack of a clear test. The new framework is intended to bring discipline to the field.</p>\n\n<h3>What about temporary employees?</h3>\n\n<p>The judgment expressly preserves the principle in <em>State of Punjab v. Jagjit Singh</em>, (2017) 1 SCC 148, that daily-wage and temporary employees performing identical duties are entitled to minimum pay-scale of the regular post. This is treated as a separate principle of human dignity, not a comparative-equality claim.</p>\n\n<h3>Government's response</h3>\n\n<p>The Department of Personnel and Training is expected to issue a clarificatory office memorandum within thirty days. Practitioners should watch for amendments to the Central Civil Services (Revised Pay) Rules, which the Court has flagged as in need of harmonisation.</p>\n\n<h2>Practical takeaways</h2>\n\n<ul>\n  <li>Pleadings must now disclose, in detail, the comparator's job description, responsibilities, and reporting lines.</li>\n  <li>Affidavits in opposition will need to articulate the policy basis for any differential.</li>\n  <li>The earlier shortcut of citing Article 39(d) without comparator-level evidence is closed.</li>\n  <li>Pending matters before High Courts will need to be re-cast in light of the new test.</li>\n</ul>\n\n<p>The full judgment is available on the Supreme Court website. For Indian counsel preparing pleadings under the new framework, see also <em>Article 14 of the Constitution</em>, which the Court draws on heavily in paragraphs 89 to 102.</p>",
+    "date": "2025-04-22T09:30:00",
+    "modified": "2025-04-22T11:15:00",
+    "commentCount": 14,
+    "featuredImage": {
+      "node": {
+        "id": "media-1",
+        "sourceUrl": "https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=1600",
+        "altText": "Supreme Court of India facade at dusk",
+        "caption": "The Supreme Court of India, New Delhi.",
+        "mediaDetails": { "width": 1600, "height": 900 }
+      }
+    },
+    "author": {
+      "node": {
+        "id": "user-1",
+        "databaseId": 2,
+        "name": "Aanya Mehra",
+        "slug": "aanya-mehra",
+        "description": "Aanya Mehra covers the Supreme Court for Insight Lawyer. She previously practiced commercial litigation at the Delhi High Court and clerked at the Supreme Court of India.",
+        "avatar": { "url": "https://i.pravatar.cc/200?u=aanya" },
+        "roles": { "nodes": [{ "displayName": "Senior Reporter", "name": "author" }] }
+      }
+    },
+    "categories": {
+      "nodes": [
+        { "id": "cat-1", "databaseId": 1, "name": "Constitutional", "slug": "constitutional", "count": 24, "uri": "/category/constitutional" }
+      ]
+    },
+    "tags": {
+      "nodes": [
+        { "id": "tag-1", "name": "Article 39", "slug": "article-39" },
+        { "id": "tag-2", "name": "Equal pay", "slug": "equal-pay" },
+        { "id": "tag-3", "name": "Supreme Court", "slug": "supreme-court" },
+        { "id": "tag-4", "name": "Public sector", "slug": "public-sector" }
+      ]
+    },
+    "seo": {
+      "title": "Constitutional Bench clarifies the test on equal pay for equal work — Insight Lawyer",
+      "description": "The Supreme Court's five-judge bench has redrawn the contours of Article 39(d). What changes for public-sector employers and the government's salary review mechanism.",
+      "canonicalUrl": "https://insightlawyer.in/constitutional-bench-clarifies-test-on-equal-pay"
+    }
+  }
+}

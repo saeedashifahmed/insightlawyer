@@ -1,0 +1,58 @@
+---
+import ArchiveLayout from "@layouts/ArchiveLayout.astro";
+import PostCardLarge from "@components/cards/PostCardLarge.astro";
+import EmptyState from "@components/ui/EmptyState.astro";
+import Pagination from "@components/ui/Pagination.astro";
+import { getCategoryBySlug, getPostsByCategory } from "@lib/wp/queries";
+import { categoryPath } from "@lib/wp/url";
+
+const { slug } = Astro.params;
+if (!slug) return Astro.rewrite("/404");
+
+let category = null;
+let posts: Awaited<ReturnType<typeof getPostsByCategory>>["posts"] | null = null;
+try {
+  const [c, p] = await Promise.all([
+    getCategoryBySlug(slug),
+    getPostsByCategory(slug, 12),
+  ]);
+  category = c.category;
+  posts = p.posts;
+} catch {
+  /* below */
+}
+
+if (!category) return Astro.rewrite("/404");
+
+const items = posts?.nodes ?? [];
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "Sections", href: "/blog" },
+  { label: category.name },
+];
+---
+<ArchiveLayout
+  title={category.name}
+  kicker="Section"
+  description={category.description}
+  count={category.count}
+  breadcrumbs={breadcrumbs}
+>
+  {items.length > 0 ? (
+    <>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+        {items.map((p, i) => <PostCardLarge post={p} imgPriority={i < 3} />)}
+      </div>
+      {posts?.pageInfo?.hasNextPage && (
+        <Pagination
+          current={1}
+          hasNext={true}
+          hasPrev={false}
+          hrefFor={(p) => categoryPath(slug, p)}
+        />
+      )}
+    </>
+  ) : (
+    <EmptyState title={`No articles in ${category.name} yet`} description="New work in this section will appear here." />
+  )}
+</ArchiveLayout>

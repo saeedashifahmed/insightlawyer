@@ -1,0 +1,24 @@
+---
+import type { WPNews, WPPost } from "@lib/wp/types";
+import { formatDateShort } from "@lib/utils/date";
+import { newsPath, postPath } from "@lib/wp/url";
+
+interface Props {
+  post: WPNews | WPPost;
+  asNews?: boolean;
+}
+const { post, asNews = true } = Astro.props as Props;
+const href = asNews ? newsPath(post.slug) : postPath(post.slug);
+---
+<a
+  href={href}
+  class="tap inline-flex items-center gap-3 text-sm font-sans text-(--color-ink-700) hover:text-(--color-ink-900) whitespace-nowrap"
+>
+  <span class="kicker text-(--color-danger)">Live</span>
+  <span class="font-medium truncate max-w-[55ch]">{post.title}</span>
+  {post.date && (
+    <time datetime={post.date} class="text-(--color-ink-500) text-xs">
+      {formatDateShort(post.date)}
+    </time>
+  )}
+</a>

@@ -1,0 +1,321 @@
+{
+  "sticky": {
+    "nodes": [
+      {
+        "__typename": "Post",
+        "id": "post-1",
+        "databaseId": 1,
+        "slug": "constitutional-bench-clarifies-test-on-equal-pay",
+        "uri": "/constitutional-bench-clarifies-test-on-equal-pay",
+        "title": "Constitutional Bench clarifies the test on equal pay for equal work",
+        "excerpt": "<p>The Supreme Court's five-judge bench has, in a rare unanimous ruling, redrawn the contours of Article 39(d). Here's what changes for public-sector employers and the government's salary review mechanism.</p>",
+        "content": "<p>The Court's order, running to 187 pages, settles a question that has divided High Courts for over a decade. Section 16 of the Industrial Disputes Act was read down for narrow application.</p><h2>What the bench decided</h2><p>Article 39(d) is a directive principle, but the Court held it informs the equality guarantee under Article 14 and Article 16. The test articulated in <span class=\"citation\">AIR 1973 SC 1461</span> stands modified.</p>",
+        "date": "2025-04-22T09:30:00",
+        "modified": "2025-04-22T11:15:00",
+        "featuredImage": {
+          "node": {
+            "sourceUrl": "https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=1600",
+            "altText": "Supreme Court of India facade at dusk"
+          }
+        },
+        "author": {
+          "node": {
+            "name": "Aanya Mehra",
+            "slug": "aanya-mehra",
+            "description": "Aanya covers the Supreme Court for Insight Lawyer.",
+            "avatar": { "url": "https://i.pravatar.cc/120?u=aanya" },
+            "roles": { "nodes": [{ "displayName": "Senior Reporter", "name": "author" }] }
+          }
+        },
+        "categories": {
+          "nodes": [
+            { "id": "cat-1", "databaseId": 1, "name": "Constitutional", "slug": "constitutional", "count": 24 }
+          ]
+        },
+        "tags": {
+          "nodes": [
+            { "id": "tag-1", "name": "Article 39", "slug": "article-39" },
+            { "id": "tag-2", "name": "Equal pay", "slug": "equal-pay" }
+          ]
+        },
+        "seo": {
+          "title": "Constitutional Bench clarifies the test on equal pay for equal work — Insight Lawyer",
+          "description": "The Supreme Court's five-judge bench has redrawn Article 39(d). Here's what changes."
+        }
+      }
+    ]
+  },
+  "latest": {
+    "nodes": [
+      {
+        "__typename": "Post",
+        "id": "post-2",
+        "databaseId": 2,
+        "slug": "delhi-hc-on-section-498a",
+        "uri": "/delhi-hc-on-section-498a",
+        "title": "Delhi High Court tightens the screws on misuse of Section 498A",
+        "excerpt": "<p>A division bench has issued binding directions to the Delhi Police, requiring preliminary inquiry before arrest in a class of matrimonial complaints.</p>",
+        "content": "<p>The directions take effect immediately and apply to all police districts. <span class=\"citation\">Section 498A IPC</span> remains a cognisable offence, but the procedural sieve has been refined.</p>",
+        "date": "2025-04-21T18:00:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=1200", "altText": "Court hallway" } },
+        "author": { "node": { "name": "Rohan Iyer", "slug": "rohan-iyer", "avatar": { "url": "https://i.pravatar.cc/120?u=rohan" }, "roles": { "nodes": [{ "displayName": "Reporter" }] } } },
+        "categories": { "nodes": [{ "name": "Criminal", "slug": "criminal" }] },
+        "tags": { "nodes": [{ "name": "498A", "slug": "498a" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "post-3",
+        "databaseId": 3,
+        "slug": "gst-council-43rd-meeting-takeaways",
+        "uri": "/gst-council-43rd-meeting-takeaways",
+        "title": "GST Council's 43rd meeting: five takeaways for tax counsel",
+        "excerpt": "<p>Rate rationalisation on essentials, two new compliance windows, and a long-pending clarification on intermediary services. We unpack what each change means in practice.</p>",
+        "content": "<p>Among the headline outcomes is a lower rate on healthcare consumables and a one-time amnesty for late filers under <span class=\"citation\">Section 73 of the CGST Act</span>.</p>",
+        "date": "2025-04-21T08:45:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1554224155-1696413565d3?w=1200", "altText": "Tax forms on a desk" } },
+        "author": { "node": { "name": "Priya Banerjee", "slug": "priya-banerjee", "avatar": { "url": "https://i.pravatar.cc/120?u=priya" }, "roles": { "nodes": [{ "displayName": "Tax Editor" }] } } },
+        "categories": { "nodes": [{ "name": "Tax", "slug": "tax" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "post-4",
+        "databaseId": 4,
+        "slug": "competition-commission-tightens-merger-thresholds",
+        "uri": "/competition-commission-tightens-merger-thresholds",
+        "title": "Competition Commission tightens merger thresholds for digital deals",
+        "excerpt": "<p>A new circular catches deal value-based notifications under Section 5 of the Competition Act. Tech M&A practice must adjust.</p>",
+        "content": "<p>The circular takes effect from 1 May 2025.</p>",
+        "date": "2025-04-20T14:00:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200", "altText": "Boardroom with paperwork" } },
+        "author": { "node": { "name": "Vikram Saxena", "slug": "vikram-saxena", "avatar": { "url": "https://i.pravatar.cc/120?u=vikram" }, "roles": { "nodes": [{ "displayName": "Corporate Editor" }] } } },
+        "categories": { "nodes": [{ "name": "Corporate", "slug": "corporate" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "post-5",
+        "databaseId": 5,
+        "slug": "patent-office-issues-fresh-guidelines-on-cii",
+        "uri": "/patent-office-issues-fresh-guidelines-on-cii",
+        "title": "Patent Office issues fresh guidelines on computer-related inventions",
+        "excerpt": "<p>The 2025 CRI guidelines walk back the technical-effect requirement, in line with Delhi HC's recent ruling.</p>",
+        "content": "<p>The new guidelines reflect Delhi HC's reading in Microsoft v. Assistant Controller.</p>",
+        "date": "2025-04-19T11:30:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200", "altText": "Circuit boards" } },
+        "author": { "node": { "name": "Kabir Joshi", "slug": "kabir-joshi", "avatar": { "url": "https://i.pravatar.cc/120?u=kabir" } } },
+        "categories": { "nodes": [{ "name": "IP", "slug": "ip" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "post-6",
+        "databaseId": 6,
+        "slug": "supreme-court-on-arbitration-act-amendment",
+        "uri": "/supreme-court-on-arbitration-act-amendment",
+        "title": "Supreme Court reads down the 2024 arbitration amendment",
+        "excerpt": "<p>A three-judge bench has narrowed the scope of the 2024 amendment to Section 11 of the Arbitration Act.</p>",
+        "content": "<p>The judgment delivered by Justice Sundresh restricts retrospective application.</p>",
+        "date": "2025-04-18T16:20:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200", "altText": "Legal books on a shelf" } },
+        "author": { "node": { "name": "Aanya Mehra", "slug": "aanya-mehra", "avatar": { "url": "https://i.pravatar.cc/120?u=aanya" } } },
+        "categories": { "nodes": [{ "name": "Civil", "slug": "civil" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "post-7",
+        "databaseId": 7,
+        "slug": "sebi-revises-related-party-transaction-norms",
+        "uri": "/sebi-revises-related-party-transaction-norms",
+        "title": "SEBI revises related-party transaction norms after consultation",
+        "excerpt": "<p>The new threshold for material RPTs drops to ₹1,000 crore.</p>",
+        "content": "<p>Companies will need to recalibrate audit-committee processes.</p>",
+        "date": "2025-04-18T10:00:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=1200", "altText": "Corporate office building" } },
+        "author": { "node": { "name": "Vikram Saxena", "slug": "vikram-saxena", "avatar": { "url": "https://i.pravatar.cc/120?u=vikram" } } },
+        "categories": { "nodes": [{ "name": "Corporate", "slug": "corporate" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "post-8",
+        "databaseId": 8,
+        "slug": "labour-codes-implementation-update",
+        "uri": "/labour-codes-implementation-update",
+        "title": "Labour Codes: nine states notify rules, two amend them in haste",
+        "excerpt": "<p>Implementation across the four codes remains uneven; here is the state-wise scorecard as of April.</p>",
+        "content": "<p>The Code on Wages remains the most-notified.</p>",
+        "date": "2025-04-17T09:30:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?w=1200", "altText": "Workers at a factory floor" } },
+        "author": { "node": { "name": "Shreya Pillai", "slug": "shreya-pillai", "avatar": { "url": "https://i.pravatar.cc/120?u=shreya" } } },
+        "categories": { "nodes": [{ "name": "Labor", "slug": "labor" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "post-9",
+        "databaseId": 9,
+        "slug": "muslim-marriage-and-divorce-bill-explained",
+        "uri": "/muslim-marriage-and-divorce-bill-explained",
+        "title": "The Muslim Marriage and Divorce (Registration) Bill, explained",
+        "excerpt": "<p>What the new draft does, what it leaves out, and how it interacts with the Muslim Personal Law (Shariat) Application Act, 1937.</p>",
+        "content": "<p>The bill mandates registration of all marriages, divorces, and annulments under personal law.</p>",
+        "date": "2025-04-16T17:45:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1200", "altText": "Wedding rings on a document" } },
+        "author": { "node": { "name": "Fatima Rizvi", "slug": "fatima-rizvi", "avatar": { "url": "https://i.pravatar.cc/120?u=fatima" } } },
+        "categories": { "nodes": [{ "name": "Family", "slug": "family" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "post-10",
+        "databaseId": 10,
+        "slug": "data-protection-rules-finalised",
+        "uri": "/data-protection-rules-finalised",
+        "title": "Data Protection rules finalised after long consultation",
+        "excerpt": "<p>The Digital Personal Data Protection Rules, 2025 will take effect in three phases over twelve months.</p>",
+        "content": "<p>Phase one covers significant data fiduciaries.</p>",
+        "date": "2025-04-15T13:10:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200", "altText": "Data center" } },
+        "author": { "node": { "name": "Kabir Joshi", "slug": "kabir-joshi", "avatar": { "url": "https://i.pravatar.cc/120?u=kabir" } } },
+        "categories": { "nodes": [{ "name": "Corporate", "slug": "corporate" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "post-11",
+        "databaseId": 11,
+        "slug": "constitution-bench-on-anti-defection",
+        "uri": "/constitution-bench-on-anti-defection",
+        "title": "Constitution bench reserves judgment on anti-defection reference",
+        "excerpt": "<p>After eleven days of arguments, the bench is set to rule on whether the Speaker's role in disqualification proceedings can be curtailed.</p>",
+        "content": "<p>The reference arises from a 2023 split-verdict.</p>",
+        "date": "2025-04-14T19:30:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=1200", "altText": "Parliament building" } },
+        "author": { "node": { "name": "Aanya Mehra", "slug": "aanya-mehra", "avatar": { "url": "https://i.pravatar.cc/120?u=aanya" } } },
+        "categories": { "nodes": [{ "name": "Constitutional", "slug": "constitutional" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "post-12",
+        "databaseId": 12,
+        "slug": "trademark-office-clears-backlog",
+        "uri": "/trademark-office-clears-backlog",
+        "title": "Trademark Office clears half the backlog in twelve months",
+        "excerpt": "<p>A new examiner cohort and software upgrade have done what years of policy could not.</p>",
+        "content": "<p>The backlog has fallen from 4.2 lakh to 2.1 lakh applications.</p>",
+        "date": "2025-04-13T11:00:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200", "altText": "Stack of paper applications" } },
+        "author": { "node": { "name": "Kabir Joshi", "slug": "kabir-joshi", "avatar": { "url": "https://i.pravatar.cc/120?u=kabir" } } },
+        "categories": { "nodes": [{ "name": "IP", "slug": "ip" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "post-13",
+        "databaseId": 13,
+        "slug": "civil-procedure-reform-pilot",
+        "uri": "/civil-procedure-reform-pilot",
+        "title": "Bombay High Court launches civil procedure reform pilot",
+        "excerpt": "<p>Strict pre-trial timelines, mandatory mediation referral, and an expedited paper-book regime.</p>",
+        "content": "<p>The pilot covers commercial suits valued above ₹3 crore.</p>",
+        "date": "2025-04-12T08:15:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=1200", "altText": "Stack of legal files" } },
+        "author": { "node": { "name": "Rohan Iyer", "slug": "rohan-iyer", "avatar": { "url": "https://i.pravatar.cc/120?u=rohan" } } },
+        "categories": { "nodes": [{ "name": "Civil", "slug": "civil" }] }
+      }
+    ]
+  },
+  "news": {
+    "nodes": [
+      {
+        "__typename": "Post",
+        "id": "news-1",
+        "slug": "live-supreme-court-collegium-recommendations",
+        "title": "Live: Supreme Court collegium recommends six names for High Court appointments",
+        "excerpt": "<p>Updates from the collegium meeting are expected through the day.</p>",
+        "content": "<p>The collegium met today.</p>",
+        "date": "2025-04-22T07:00:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200" } },
+        "categories": { "nodes": [{ "name": "News", "slug": "news" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "news-2",
+        "slug": "ed-arrests-businessman-money-laundering",
+        "title": "ED arrests businessman in major money laundering probe",
+        "excerpt": "<p>Investigators have allegedly traced funds across three countries.</p>",
+        "content": "<p>Arrest details remain provisional.</p>",
+        "date": "2025-04-22T05:30:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200" } },
+        "categories": { "nodes": [{ "name": "News", "slug": "news" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "news-3",
+        "slug": "kerala-hc-stays-cabinet-decision",
+        "title": "Kerala HC stays Cabinet decision on temple board reconstitution",
+        "excerpt": "<p>The interim order will hold until the next hearing.</p>",
+        "content": "<p>Stakeholders are expected to file responses.</p>",
+        "date": "2025-04-22T04:15:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1519302959554-a75be0afc82a?w=1200" } },
+        "categories": { "nodes": [{ "name": "News", "slug": "news" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "news-4",
+        "slug": "lok-sabha-passes-mediation-amendment",
+        "title": "Lok Sabha passes amendment to the Mediation Act",
+        "excerpt": "<p>The amendment expands the scope of mandatory mediation in commercial disputes.</p>",
+        "content": "<p>It will now move to the Rajya Sabha.</p>",
+        "date": "2025-04-22T03:45:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=1200" } },
+        "categories": { "nodes": [{ "name": "News", "slug": "news" }] }
+      }
+    ]
+  },
+  "editorPicks": {
+    "nodes": [
+      {
+        "__typename": "Post",
+        "id": "ep-1",
+        "slug": "rethinking-bail-jurisprudence",
+        "title": "Rethinking bail jurisprudence: a long view from Allahabad",
+        "excerpt": "<p>A new statistical study of 12,000 bail orders shows striking divergence across benches.</p>",
+        "content": "",
+        "date": "2025-04-10T09:00:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1453928582365-b6ad33cbcf64?w=1200" } },
+        "author": { "node": { "name": "Aanya Mehra", "slug": "aanya-mehra" } },
+        "categories": { "nodes": [{ "name": "Criminal", "slug": "criminal" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "ep-2",
+        "slug": "the-quiet-revolution-in-arbitration",
+        "title": "The quiet revolution in Indian arbitration",
+        "excerpt": "<p>Statistics, anecdote, and an honest reckoning with what works.</p>",
+        "content": "",
+        "date": "2025-04-08T11:00:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1200" } },
+        "author": { "node": { "name": "Vikram Saxena", "slug": "vikram-saxena" } },
+        "categories": { "nodes": [{ "name": "Civil", "slug": "civil" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "ep-3",
+        "slug": "the-shape-of-personal-data-law",
+        "title": "The shape of India's personal data law, two years in",
+        "excerpt": "<p>The DPDP Act has settled into its first cases. The contours are clearer than expected.</p>",
+        "content": "",
+        "date": "2025-04-05T15:30:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1551434678-e076c223a692?w=1200" } },
+        "author": { "node": { "name": "Kabir Joshi", "slug": "kabir-joshi" } },
+        "categories": { "nodes": [{ "name": "Corporate", "slug": "corporate" }] }
+      }
+    ]
+  },
+  "practiceAreas": {
+    "nodes": [
+      { "id": "c-1", "name": "Constitutional", "slug": "constitutional", "description": "The Constitution and the courts.", "count": 24 },
+      { "id": "c-2", "name": "Criminal", "slug": "criminal", "description": "Trial, evidence, sentencing.", "count": 38 },
+      { "id": "c-3", "name": "Civil", "slug": "civil", "description": "Procedure and substantive civil law.", "count": 27 },
+      { "id": "c-4", "name": "Corporate", "slug": "corporate", "description": "Companies, governance, M&A.", "count": 31 },
+      { "id": "c-5", "name": "Tax", "slug": "tax", "description": "Direct and indirect tax practice.", "count": 19 },
+      { "id": "c-6", "name": "IP", "slug": "ip", "description": "Patents, trademarks, copyright.", "count": 14 },
+      { "id": "c-7", "name": "Family", "slug": "family", "description": "Marriage, succession, guardianship.", "count": 11 },
+      { "id": "c-8", "name": "Labor", "slug": "labor", "description": "Employment and industrial law.", "count": 9 }
+    ]
+  }
+}

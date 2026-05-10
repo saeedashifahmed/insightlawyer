@@ -1,0 +1,59 @@
+---
+import { Home, Newspaper, LayoutGrid, Search, Bookmark } from "@lucide/astro";
+
+const path = Astro.url.pathname;
+
+const TABS = [
+  { id: "home", label: "Home", href: "/", icon: Home, match: (p: string) => p === "/" },
+  { id: "news", label: "News", href: "/news", icon: Newspaper, match: (p: string) => p.startsWith("/news") },
+  { id: "categories", label: "Sections", href: "/blog", icon: LayoutGrid, match: (p: string) => p.startsWith("/blog") || p.startsWith("/category") },
+  { id: "search", label: "Search", href: "/search", icon: Search, match: (p: string) => p.startsWith("/search") },
+  { id: "saved", label: "Saved", href: "/saved", icon: Bookmark, match: (p: string) => p.startsWith("/saved") },
+];
+---
+<nav
+  id="il-mobile-nav"
+  aria-label="Primary mobile"
+  class="auto-hide bottom md:hidden fixed bottom-0 inset-x-0 z-50 bg-(--color-paper)/95 backdrop-blur border-t border-(--color-ink-200)"
+  style="padding-bottom: env(safe-area-inset-bottom);"
+>
+  <ul class="grid grid-cols-5">
+    {TABS.map((t) => {
+      const active = t.match(path);
+      const Icon = t.icon;
+      return (
+        <li>
+          <a
+            href={t.href}
+            aria-current={active ? "page" : undefined}
+            class={`tap flex flex-col items-center gap-0.5 py-2 min-h-14 text-[0.66rem] uppercase tracking-wider font-sans font-semibold transition-colors ${
+              active ? "text-(--color-ink-900)" : "text-(--color-ink-500)"
+            }`}
+          >
+            <span class="relative inline-flex items-center justify-center w-7 h-7">
+              <Icon class={`w-5 h-5 ${active ? "fill-(--color-ink-900)" : ""}`} stroke-width={active ? 2.4 : 1.8} />
+            </span>
+            <span>{t.label}</span>
+            {active && <span class="absolute bottom-0 w-7 h-0.5 bg-(--color-gold-400) rounded-full"></span>}
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+</nav>
+
+<script>
+  const bar = document.getElementById("il-mobile-nav");
+  if (bar) {
+    let last = 0;
+    let raf = 0;
+    const onScroll = () => {
+      raf = 0;
+      const y = window.scrollY;
+      const goingDown = y > last && y > 80;
+      bar.dataset.hidden = goingDown ? "true" : "false";
+      last = y;
+    };
+    window.addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(onScroll); }, { passive: true });
+  }
+</script>

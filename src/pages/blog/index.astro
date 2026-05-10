@@ -1,0 +1,67 @@
+---
+import ArchiveLayout from "@layouts/ArchiveLayout.astro";
+import PostCardLarge from "@components/cards/PostCardLarge.astro";
+import EmptyState from "@components/ui/EmptyState.astro";
+import Pill from "@components/ui/Pill.astro";
+import Pagination from "@components/ui/Pagination.astro";
+import { getPostsPage } from "@lib/wp/queries";
+
+const PER_PAGE = 12;
+let posts: Awaited<ReturnType<typeof getPostsPage>>["posts"] | null = null;
+try {
+  const data = await getPostsPage(PER_PAGE);
+  posts = data.posts;
+} catch {
+  posts = null;
+}
+const items = posts?.nodes ?? [];
+
+const FILTERS = [
+  { id: "all", label: "All", href: "/blog" },
+  { id: "constitutional", label: "Constitutional", href: "/category/constitutional" },
+  { id: "criminal", label: "Criminal", href: "/category/criminal" },
+  { id: "corporate", label: "Corporate", href: "/category/corporate" },
+  { id: "tax", label: "Tax", href: "/category/tax" },
+  { id: "ip", label: "IP", href: "/category/ip" },
+];
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "Articles" },
+];
+---
+<ArchiveLayout
+  title="Articles"
+  kicker="The library"
+  description="Long-form analysis, case notes, and practice insights from across Indian law."
+  breadcrumbs={breadcrumbs}
+>
+  <div class="hidden md:flex flex-wrap gap-2 mb-8">
+    {FILTERS.map((f) => (
+      <Pill href={f.href} active={f.id === "all"}>{f.label}</Pill>
+    ))}
+  </div>
+
+  {items.length > 0 ? (
+    <>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+        {items.map((p, i) => <PostCardLarge post={p} imgPriority={i < 3} />)}
+      </div>
+      {posts?.pageInfo?.hasNextPage && (
+        <Pagination
+          current={1}
+          hasNext={true}
+          hasPrev={false}
+          hrefFor={(p) => `/blog/page/${p}`}
+        />
+      )}
+    </>
+  ) : (
+    <EmptyState
+      title="No articles yet"
+      description="Articles will appear here as soon as they’re published."
+      ctaLabel="Back home"
+      ctaHref="/"
+    />
+  )}
+</ArchiveLayout>

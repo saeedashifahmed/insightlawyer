@@ -1,0 +1,70 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { Bookmark } from "@lucide/astro";
+---
+<BaseLayout title="Saved articles" noindex={true} canonical="/saved">
+  <div class="container-wide py-10 md:py-16">
+    <header class="max-w-2xl">
+      <span class="kicker">Your library</span>
+      <h1 class="mt-2 font-serif text-3xl md:text-5xl font-semibold text-(--color-ink-900) leading-tight">
+        Saved articles
+      </h1>
+      <p class="mt-3 text-(--color-ink-600)">Articles you’ve bookmarked from this device. We do not store this list on a server.</p>
+      <span class="gold-rule mt-5"></span>
+    </header>
+
+    <div id="il-saved-list" class="mt-10">
+      <div id="il-saved-empty" class="text-center max-w-md mx-auto py-16">
+        <div class="inline-flex w-12 h-12 items-center justify-center rounded-full bg-(--color-paper-2) text-(--color-ink-500) mb-4">
+          <Bookmark class="w-5 h-5" />
+        </div>
+        <h2 class="font-serif text-2xl text-(--color-ink-900)">Nothing saved yet</h2>
+        <p class="mt-2 text-(--color-ink-600)">Tap the bookmark icon on any article to keep it here for later.</p>
+        <a href="/blog" class="tap mt-5 inline-flex items-center px-4 py-2 rounded-md bg-(--color-brand-500) text-(--color-paper) font-semibold">Browse articles</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    type SavedItem = { title: string; url: string; date: string };
+    const list = document.getElementById("il-saved-list")!;
+    const empty = document.getElementById("il-saved-empty");
+    let items: SavedItem[] = [];
+    try {
+      items = JSON.parse(localStorage.getItem("il-saved") ?? "[]") as SavedItem[];
+    } catch {
+      items = [];
+    }
+    if (items.length) {
+      empty?.remove();
+      list.innerHTML = `
+        <ul class="divide-y divide-(--color-ink-200) max-w-3xl">
+          ${items
+            .map(
+              (it) => `
+            <li class="py-5 flex items-center justify-between gap-4">
+              <a href="${it.url}" class="flex-1 min-w-0">
+                <p class="font-serif text-xl text-(--color-ink-900) line-clamp-2">${it.title}</p>
+                <p class="text-xs text-(--color-ink-500) mt-1">${it.date}</p>
+              </a>
+              <button
+                class="tap text-sm text-(--color-danger)"
+                data-remove="${encodeURIComponent(it.url)}"
+              >Remove</button>
+            </li>
+          `,
+            )
+            .join("")}
+        </ul>
+      `;
+      list.querySelectorAll<HTMLButtonElement>("[data-remove]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const url = decodeURIComponent(btn.dataset.remove ?? "");
+          const next = items.filter((i) => i.url !== url);
+          localStorage.setItem("il-saved", JSON.stringify(next));
+          location.reload();
+        });
+      });
+    }
+  </script>
+</BaseLayout>

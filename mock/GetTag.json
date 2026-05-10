@@ -1,0 +1,10 @@
+{
+  "tag": {
+    "id": "tag-1",
+    "databaseId": 1,
+    "name": "Article 39",
+    "slug": "article-39",
+    "count": 4,
+    "uri": "/tag/article-39"
+  }
+}

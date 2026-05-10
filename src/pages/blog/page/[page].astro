@@ -1,0 +1,66 @@
+---
+import ArchiveLayout from "@layouts/ArchiveLayout.astro";
+import PostCardLarge from "@components/cards/PostCardLarge.astro";
+import EmptyState from "@components/ui/EmptyState.astro";
+import Pagination from "@components/ui/Pagination.astro";
+import { getPostsPage } from "@lib/wp/queries";
+
+const PER_PAGE = 12;
+const pageParam = Number.parseInt(Astro.params.page ?? "1", 10);
+const page = Number.isFinite(pageParam) && pageParam > 0 ? pageParam : 1;
+if (page === 1) return Astro.redirect("/blog");
+
+// Cursor-based pagination requires walking forward. Skip in chunks of PER_PAGE.
+let after: string | undefined = undefined;
+let posts: Awaited<ReturnType<typeof getPostsPage>>["posts"] | null = null;
+try {
+  for (let i = 1; i < page; i++) {
+    const r = await getPostsPage(PER_PAGE, after);
+    if (!r.posts.pageInfo?.hasNextPage) {
+      posts = { nodes: [], pageInfo: { hasNextPage: false, hasPreviousPage: true } };
+      break;
+    }
+    after = r.posts.pageInfo?.endCursor;
+  }
+  if (!posts) {
+    const data = await getPostsPage(PER_PAGE, after);
+    posts = data.posts;
+  }
+} catch {
+  posts = null;
+}
+const items = posts?.nodes ?? [];
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "Articles", href: "/blog" },
+  { label: `Page ${page}` },
+];
+---
+<ArchiveLayout
+  title="Articles"
+  kicker={`Page ${page}`}
+  breadcrumbs={breadcrumbs}
+  canonical={`/blog/page/${page}`}
+>
+  {items.length > 0 ? (
+    <>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+        {items.map((p) => <PostCardLarge post={p} />)}
+      </div>
+      <Pagination
+        current={page}
+        hasNext={posts?.pageInfo?.hasNextPage ?? false}
+        hasPrev={true}
+        hrefFor={(p) => (p === 1 ? "/blog" : `/blog/page/${p}`)}
+      />
+    </>
+  ) : (
+    <EmptyState
+      title="No more articles"
+      description="You’ve reached the end of the archive."
+      ctaLabel="Back to articles"
+      ctaHref="/blog"
+    />
+  )}
+</ArchiveLayout>

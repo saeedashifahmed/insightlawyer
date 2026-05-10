@@ -1,0 +1,25 @@
+---
+import ArticleLayout from "@layouts/ArticleLayout.astro";
+import { getNewsBySlug, getRelatedPosts } from "@lib/wp/queries";
+import { enhanceWpHtml } from "@lib/wp/enhance-html";
+
+const { slug } = Astro.params;
+if (!slug) return Astro.redirect("/news");
+
+let post = null;
+try {
+  const r = await getNewsBySlug(slug);
+  post = r.post;
+} catch {
+  post = null;
+}
+if (!post) return Astro.rewrite("/404");
+
+const enhanced = await enhanceWpHtml(post.content ?? "", {
+  imageSizes: "(min-width: 1024px) 720px, 100vw",
+});
+
+const primaryCat = post.categories?.nodes?.[0]?.slug ?? "news";
+const related = await getRelatedPosts(primaryCat, post.id, 4).catch(() => []);
+---
+<ArticleLayout post={post} enhancedHtml={enhanced} related={related} variant="news" />

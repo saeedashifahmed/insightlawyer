@@ -1,0 +1,48 @@
+---
+import ArchiveLayout from "@layouts/ArchiveLayout.astro";
+import PostCardLarge from "@components/cards/PostCardLarge.astro";
+import EmptyState from "@components/ui/EmptyState.astro";
+import Pagination from "@components/ui/Pagination.astro";
+import { getTagBySlug, getPostsByTag } from "@lib/wp/queries";
+import { tagPath } from "@lib/wp/url";
+
+const { slug } = Astro.params;
+if (!slug) return Astro.rewrite("/404");
+
+let tag = null;
+let posts: Awaited<ReturnType<typeof getPostsByTag>>["posts"] | null = null;
+try {
+  const [t, p] = await Promise.all([getTagBySlug(slug), getPostsByTag(slug, 12)]);
+  tag = t.tag;
+  posts = p.posts;
+} catch {
+  /* below */
+}
+if (!tag) return Astro.rewrite("/404");
+const items = posts?.nodes ?? [];
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "Tags" },
+  { label: `#${tag.name}` },
+];
+---
+<ArchiveLayout
+  title={`#${tag.name}`}
+  kicker="Tag"
+  count={tag.count}
+  breadcrumbs={breadcrumbs}
+>
+  {items.length > 0 ? (
+    <>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+        {items.map((p, i) => <PostCardLarge post={p} imgPriority={i < 3} />)}
+      </div>
+      {posts?.pageInfo?.hasNextPage && (
+        <Pagination current={1} hasNext={true} hasPrev={false} hrefFor={(p) => tagPath(slug, p)} />
+      )}
+    </>
+  ) : (
+    <EmptyState title="No articles for this tag yet" />
+  )}
+</ArchiveLayout>

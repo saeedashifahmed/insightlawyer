@@ -1,0 +1,46 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import { getPageBySlug } from "@lib/wp/queries";
+import { enhanceWpHtml } from "@lib/wp/enhance-html";
+
+let html = "";
+let title = "About Insight Lawyer";
+let description = "An independent publication covering Indian law for practitioners, students, and informed citizens.";
+try {
+  const r = await getPageBySlug("about");
+  if (r.page) {
+    title = r.page.title || title;
+    description = r.page.seo?.description ?? description;
+    html = await enhanceWpHtml(r.page.content ?? "");
+  }
+} catch {
+  /* fall back to static copy below */
+}
+---
+<PageLayout title={title} description={description} breadcrumbs={[{ label: "Home", href: "/" }, { label: "About" }]}>
+  {html ? (
+    <Fragment set:html={html} />
+  ) : (
+    <>
+      <p>
+        Insight Lawyer is an independent editorial publication covering Indian
+        law. We publish long-form analysis of judgments, statutes, and the
+        practice of law — written by lawyers, scholars, and journalists.
+      </p>
+      <h2>What we cover</h2>
+      <p>
+        Constitutional law, criminal law, corporate and tax practice,
+        intellectual property, family law, and the day-to-day work of the
+        Supreme Court, High Courts, and tribunals. Our news desk tracks
+        judgments and legislative developments as they happen.
+      </p>
+      <h2>Editorial standards</h2>
+      <p>
+        Every piece is fact-checked against primary sources — the Bare Act,
+        the reported judgment, the official gazette. We disclose authorship
+        on every byline and welcome corrections; you can reach the editor at
+        <a href="mailto:editor@insightlawyer.in">editor@insightlawyer.in</a>.
+      </p>
+    </>
+  )}
+</PageLayout>

@@ -1,0 +1,93 @@
+---
+import type { WPPost, WPNews } from "@lib/wp/types";
+import { formatDateLong, isFresh } from "@lib/utils/date";
+import { categoryPath, authorPath } from "@lib/wp/url";
+import { cleanWpExcerpt } from "@lib/utils/excerpt";
+import Badge from "@components/ui/Badge.astro";
+import { Clock } from "@lucide/astro";
+
+interface Props {
+  post: WPPost | WPNews;
+  variant?: "post" | "news";
+  minutes?: number;
+}
+const { post, variant = "post", minutes = 5 } = Astro.props as Props;
+
+const cat = post.categories?.nodes?.[0];
+const img = post.featuredImage?.node;
+const author = post.author?.node;
+const isNews = variant === "news";
+const isLive = isNews && isFresh(post.date, 24);
+const deck = cleanWpExcerpt(post.excerpt) || (post.seo?.description ?? "");
+---
+<header class="pt-6 md:pt-10">
+  <div class="max-w-3xl">
+    {cat && (
+      <a href={categoryPath(cat.slug)} class="kicker hover:text-(--color-brand-700) transition-colors" transition:name={`cat-${post.slug}`}>
+        {cat.name}
+      </a>
+    )}
+
+    <h1
+      class={`mt-3 font-${isNews ? "sans" : "serif"} font-semibold text-(--color-ink-900) leading-[1.05] tracking-tight ${
+        isNews
+          ? "text-3xl md:text-4xl"
+          : "text-[clamp(1.85rem,4vw,3.4rem)]"
+      }`}
+      transition:name={`title-${post.slug}`}
+    >
+      {post.title}
+    </h1>
+
+    {deck && (
+      <p class="mt-4 prose-deck">{deck}</p>
+    )}
+
+    <div class="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm font-sans">
+      {author && (
+        <div class="flex items-center gap-2.5">
+          {author.avatar?.url && (
+            <img src={author.avatar.url} alt="" loading="lazy" class="w-8 h-8 rounded-full border border-(--color-ink-200)" />
+          )}
+          <a href={authorPath(author.slug)} class="text-(--color-ink-900) font-semibold hover:text-(--color-brand-600) transition-colors">
+            {author.name}
+          </a>
+          {author.roles?.nodes?.[0]?.displayName && (
+            <span class="text-(--color-ink-500) text-xs uppercase tracking-wider">{author.roles.nodes[0].displayName}</span>
+          )}
+        </div>
+      )}
+      <span class="text-(--color-ink-300)" aria-hidden="true">|</span>
+      {post.date && (
+        <span class="text-(--color-ink-600)">
+          <span class="text-(--color-ink-500)">{post.modified && post.modified !== post.date ? "Updated" : "Published"}</span>{" "}
+          <time datetime={post.modified ?? post.date}>{formatDateLong(post.modified ?? post.date)}</time>
+        </span>
+      )}
+      <span class="text-(--color-ink-300)" aria-hidden="true">|</span>
+      <span class="inline-flex items-center gap-1 text-(--color-ink-600)">
+        <Clock class="w-3.5 h-3.5" />
+        <span>{minutes} min read</span>
+      </span>
+      {isLive && <Badge variant="live" size="md">Live</Badge>}
+    </div>
+  </div>
+
+  {img?.sourceUrl && (
+    <figure class="mt-8" transition:name={`hero-${post.slug}`}>
+      <div class="relative overflow-hidden rounded-lg border border-(--color-ink-200) bg-(--color-paper-2) aspect-[16/9]">
+        <img
+          src={img.sourceUrl}
+          alt={img.altText ?? post.title}
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          class="w-full h-full object-cover"
+        />
+      </div>
+      {img.caption && (
+        <figcaption class="mt-3 text-sm font-sans italic text-(--color-ink-500) max-w-prose mx-auto" set:html={img.caption} />
+      )}
+    </figure>
+  )}
+</header>

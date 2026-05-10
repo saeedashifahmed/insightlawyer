@@ -1,0 +1,66 @@
+---
+import ArchiveLayout from "@layouts/ArchiveLayout.astro";
+import PostCardLarge from "@components/cards/PostCardLarge.astro";
+import EmptyState from "@components/ui/EmptyState.astro";
+import Pagination from "@components/ui/Pagination.astro";
+import { getCategoryBySlug, getPostsByCategory } from "@lib/wp/queries";
+import { categoryPath } from "@lib/wp/url";
+
+const { slug, page: pageStr } = Astro.params;
+if (!slug) return Astro.rewrite("/404");
+const page = Number.parseInt(pageStr ?? "1", 10);
+if (!Number.isFinite(page) || page <= 1) return Astro.redirect(categoryPath(slug));
+
+const PER_PAGE = 12;
+let category = null;
+let posts: Awaited<ReturnType<typeof getPostsByCategory>>["posts"] | null = null;
+try {
+  category = (await getCategoryBySlug(slug)).category;
+  let after: string | undefined = undefined;
+  for (let i = 1; i < page; i++) {
+    const r = await getPostsByCategory(slug, PER_PAGE, after);
+    if (!r.posts.pageInfo?.hasNextPage) {
+      posts = { nodes: [], pageInfo: { hasNextPage: false } };
+      break;
+    }
+    after = r.posts.pageInfo?.endCursor;
+  }
+  if (!posts) {
+    posts = (await getPostsByCategory(slug, PER_PAGE, after)).posts;
+  }
+} catch {
+  /* below */
+}
+
+if (!category) return Astro.rewrite("/404");
+const items = posts?.nodes ?? [];
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: category.name, href: categoryPath(slug) },
+  { label: `Page ${page}` },
+];
+---
+<ArchiveLayout
+  title={category.name}
+  kicker={`Page ${page}`}
+  description={category.description}
+  breadcrumbs={breadcrumbs}
+  canonical={categoryPath(slug, page)}
+>
+  {items.length > 0 ? (
+    <>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+        {items.map((p) => <PostCardLarge post={p} />)}
+      </div>
+      <Pagination
+        current={page}
+        hasNext={posts?.pageInfo?.hasNextPage ?? false}
+        hasPrev={true}
+        hrefFor={(p) => categoryPath(slug, p)}
+      />
+    </>
+  ) : (
+    <EmptyState title="No more articles" ctaLabel={`Back to ${category.name}`} ctaHref={categoryPath(slug)} />
+  )}
+</ArchiveLayout>

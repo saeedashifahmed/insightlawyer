@@ -1,0 +1,31 @@
+---
+import type { WPAuthor } from "@lib/wp/types";
+import { authorPath } from "@lib/wp/url";
+
+interface Props { author: WPAuthor; }
+const { author } = Astro.props as Props;
+const role = author.roles?.nodes?.[0]?.displayName;
+---
+<div class="card flex flex-col sm:flex-row gap-5 p-5 sm:p-6">
+  {author.avatar?.url && (
+    <img
+      src={author.avatar.url}
+      alt={author.name}
+      loading="lazy"
+      class="w-16 h-16 rounded-full border border-(--color-ink-200) flex-none"
+    />
+  )}
+  <div class="min-w-0">
+    <p class="kicker">Written by</p>
+    <h3 class="mt-1 font-serif text-xl font-semibold text-(--color-ink-900)">
+      <a href={authorPath(author.slug)} class="hover:text-(--color-brand-600) transition-colors">{author.name}</a>
+    </h3>
+    {role && <p class="text-xs font-sans uppercase tracking-wider text-(--color-ink-500) mt-0.5">{role}</p>}
+    {author.description && (
+      <p class="mt-2 text-(--color-ink-600) text-[0.96rem] leading-relaxed max-w-prose">{author.description}</p>
+    )}
+    <a href={authorPath(author.slug)} class="inline-block mt-3 text-sm font-sans font-semibold text-(--color-brand-600) hover:text-(--color-brand-500) transition-colors">
+      Read all articles by {author.name.split(" ")[0]} →
+    </a>
+  </div>
+</div>

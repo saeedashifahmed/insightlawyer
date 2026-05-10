@@ -1,0 +1,28 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import { getPageBySlug } from "@lib/wp/queries";
+import { enhanceWpHtml } from "@lib/wp/enhance-html";
+
+let html = "";
+let title = "Disclaimer";
+try {
+  const r = await getPageBySlug("disclaimer");
+  if (r.page) {
+    title = r.page.title || title;
+    html = await enhanceWpHtml(r.page.content ?? "");
+  }
+} catch { /* fallback */ }
+---
+<PageLayout title={title} breadcrumbs={[{ label: "Home", href: "/" }, { label: "Disclaimer" }]}>
+  {html ? (
+    <Fragment set:html={html} />
+  ) : (
+    <>
+      <p><strong>The content on this site is for general informational purposes only and does not constitute legal advice.</strong></p>
+      <p>Insight Lawyer publishes editorial content for educational and informational purposes. The articles, news items, and analyses on this site reflect the views of the authors and not necessarily those of any organisation with which they are affiliated.</p>
+      <p>Citations of statutes and case law are correct as of the date of publication. Indian law evolves rapidly; readers should verify current authority before relying on any statement.</p>
+      <p>Nothing on this site creates a solicitor-client relationship. For advice on a specific matter, consult a qualified advocate licensed to practice in the relevant jurisdiction.</p>
+      <p>External links are provided for reader convenience. Insight Lawyer does not endorse the content of external sites and is not responsible for changes to them.</p>
+    </>
+  )}
+</PageLayout>

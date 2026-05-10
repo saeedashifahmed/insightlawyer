@@ -1,0 +1,26 @@
+{
+  "posts": {
+    "nodes": [
+      {
+        "__typename": "Post",
+        "id": "post-1",
+        "slug": "constitutional-bench-clarifies-test-on-equal-pay",
+        "title": "Constitutional Bench clarifies the test on equal pay for equal work",
+        "excerpt": "<p>The Supreme Court's five-judge bench has, in a rare unanimous ruling, redrawn the contours of Article 39(d).</p>",
+        "content": "",
+        "date": "2025-04-22T09:30:00",
+        "categories": { "nodes": [{ "name": "Constitutional", "slug": "constitutional" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "post-6",
+        "slug": "supreme-court-on-arbitration-act-amendment",
+        "title": "Supreme Court reads down the 2024 arbitration amendment",
+        "excerpt": "<p>A three-judge bench has narrowed the scope of the 2024 amendment.</p>",
+        "content": "",
+        "date": "2025-04-18T16:20:00",
+        "categories": { "nodes": [{ "name": "Civil", "slug": "civil" }] }
+      }
+    ]
+  }
+}

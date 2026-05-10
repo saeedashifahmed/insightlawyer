@@ -1,0 +1,53 @@
+---
+interface Tab {
+  id: string;
+  label: string;
+  count?: number;
+}
+
+interface Props {
+  tabs: Tab[];
+  active: string;
+  /** Map of tab id to URL. If provided, tabs render as <a> rather than <button>. */
+  hrefs?: Record<string, string>;
+  class?: string;
+}
+
+const { tabs, active, hrefs, class: cls = "" } = Astro.props as Props;
+---
+<div role="tablist" class={`flex flex-wrap gap-2 ${cls}`}>
+  {tabs.map((t) => {
+    const isActive = t.id === active;
+    const baseCls = `tap inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-sans font-medium border transition-colors duration-200 ${
+      isActive
+        ? "bg-(--color-ink-900) text-(--color-paper) border-(--color-ink-900)"
+        : "bg-(--color-paper) text-(--color-ink-700) border-(--color-ink-200) hover:border-(--color-ink-400)"
+    }`;
+    const href = hrefs?.[t.id];
+    return href ? (
+      <a
+        href={href}
+        role="tab"
+        aria-selected={isActive ? "true" : "false"}
+        class={baseCls}
+      >
+        {t.label}
+        {typeof t.count === "number" && (
+          <span class="opacity-70 text-xs">{t.count}</span>
+        )}
+      </a>
+    ) : (
+      <button
+        role="tab"
+        aria-selected={isActive ? "true" : "false"}
+        data-tab={t.id}
+        class={baseCls}
+      >
+        {t.label}
+        {typeof t.count === "number" && (
+          <span class="opacity-70 text-xs">{t.count}</span>
+        )}
+      </button>
+    );
+  })}
+</div>

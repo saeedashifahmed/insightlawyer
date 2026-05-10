@@ -1,0 +1,25 @@
+---
+import { AlertTriangle } from "@lucide/astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  retryHref?: string;
+}
+
+const {
+  title = "Something went wrong",
+  description = "We could not load this content. Please try again.",
+  retryHref,
+} = Astro.props as Props;
+---
+<div class="text-center max-w-md mx-auto py-16">
+  <div class="inline-flex w-12 h-12 items-center justify-center rounded-full bg-(--color-paper-2) text-(--color-danger) mb-4">
+    <AlertTriangle class="w-5 h-5" />
+  </div>
+  <h2 class="font-serif text-2xl text-(--color-ink-900)">{title}</h2>
+  <p class="mt-2 text-(--color-ink-600)">{description}</p>
+  {retryHref && (
+    <a href={retryHref} class="tap mt-5 inline-flex items-center px-4 py-2 rounded-md border border-(--color-ink-300) text-(--color-ink-900) font-semibold">Try again</a>
+  )}
+</div>

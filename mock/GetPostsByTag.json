@@ -1,0 +1,19 @@
+{
+  "posts": {
+    "pageInfo": { "hasNextPage": false, "endCursor": null },
+    "nodes": [
+      {
+        "__typename": "Post",
+        "id": "post-1",
+        "slug": "constitutional-bench-clarifies-test-on-equal-pay",
+        "title": "Constitutional Bench clarifies the test on equal pay for equal work",
+        "excerpt": "<p>The Supreme Court's five-judge bench has redrawn Article 39(d).</p>",
+        "content": "",
+        "date": "2025-04-22T09:30:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=1200" } },
+        "author": { "node": { "name": "Aanya Mehra", "slug": "aanya-mehra" } },
+        "categories": { "nodes": [{ "name": "Constitutional", "slug": "constitutional" }] }
+      }
+    ]
+  }
+}

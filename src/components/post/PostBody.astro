@@ -1,0 +1,43 @@
+---
+interface Props {
+  /** Pre-enhanced HTML — must already be sanitized + transformed via enhance-html.ts. */
+  html: string;
+  dropCap?: boolean;
+}
+const { html, dropCap = false } = Astro.props as Props;
+---
+<div class="prose mx-auto" data-dropcap={dropCap ? "true" : "false"}>
+  <Fragment set:html={html} />
+</div>
+
+<script>
+  // Inline image lightbox — vanilla, no library.
+  document.addEventListener("click", (ev) => {
+    const target = ev.target as HTMLElement | null;
+    if (!target || target.tagName !== "IMG") return;
+    const img = target as HTMLImageElement;
+    if (!img.closest(".prose")) return;
+    if (img.closest("a")) return;
+    const overlay = document.createElement("div");
+    overlay.style.cssText = `
+      position: fixed; inset: 0; z-index: 100;
+      background: rgba(13, 13, 12, 0.92);
+      display: flex; align-items: center; justify-content: center;
+      cursor: zoom-out; backdrop-filter: blur(4px);
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    `;
+    const big = document.createElement("img");
+    big.src = img.currentSrc || img.src;
+    big.alt = img.alt;
+    big.style.cssText = "max-width: 95vw; max-height: 90vh; object-fit: contain; border-radius: 6px;";
+    overlay.appendChild(big);
+    overlay.addEventListener("click", () => overlay.remove());
+    document.addEventListener("keydown", function esc(e) {
+      if (e.key === "Escape") {
+        overlay.remove();
+        document.removeEventListener("keydown", esc);
+      }
+    });
+    document.body.appendChild(overlay);
+  });
+</script>

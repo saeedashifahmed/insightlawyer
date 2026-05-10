@@ -1,0 +1,45 @@
+---
+import ArticleLayout from "@layouts/ArticleLayout.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import { resolveContentBySlug, getRelatedPosts } from "@lib/wp/queries";
+import { enhanceWpHtml } from "@lib/wp/enhance-html";
+
+export const prerender = false;
+
+const slug = (Astro.params.slug ?? "").toString();
+if (!slug || slug === "/" || slug === "") return Astro.redirect("/", 308);
+
+let resolved = null;
+try {
+  resolved = await resolveContentBySlug(String(slug));
+} catch {
+  resolved = null;
+}
+
+if (!resolved) {
+  // Let Astro render src/pages/404.astro with the correct 404 status.
+  return Astro.rewrite("/404");
+}
+
+Astro.response.headers.set("Cache-Control", "public, max-age=60, s-maxage=300");
+
+const data = resolved.data;
+const enhanced = await enhanceWpHtml(data.content ?? "");
+
+let related: Awaited<ReturnType<typeof getRelatedPosts>> = [];
+if (resolved.type === "post" && data.categories?.nodes?.[0]?.slug) {
+  related = await getRelatedPosts(data.categories.nodes[0].slug, data.id, 4).catch(() => []);
+}
+---
+{resolved.type === "page" ? (
+  <PageLayout title={data.title} description={data.seo?.description ?? data.excerpt}>
+    <Fragment set:html={enhanced} />
+  </PageLayout>
+) : (
+  <ArticleLayout
+    post={data}
+    enhancedHtml={enhanced}
+    related={related}
+    variant={resolved.type === "news" ? "news" : "post"}
+  />
+)}

@@ -1,0 +1,79 @@
+---
+import Accordion from "@components/ui/Accordion.astro";
+
+interface Item {
+  id: string;
+  text: string;
+  level: 2 | 3;
+}
+interface Props {
+  items: Item[];
+  compact?: boolean;
+}
+const { items, compact = false } = Astro.props as Props;
+---
+{compact ? (
+  <Accordion summary={`In this article (${items.length})`}>
+    <ol class="space-y-1.5 text-[0.95rem]">
+      {items.map((it) => (
+        <li class={it.level === 3 ? "ml-4" : ""}>
+          <a href={`#${it.id}`} class="text-(--color-ink-700) hover:text-(--color-brand-600) transition-colors">
+            {it.text}
+          </a>
+        </li>
+      ))}
+    </ol>
+  </Accordion>
+) : (
+  <nav aria-label="Table of contents" class="text-sm font-sans">
+    <h3 class="kicker mb-3">In this article</h3>
+    <ol class="space-y-2 border-l border-(--color-ink-200) pl-4" id="il-toc-list">
+      {items.map((it) => (
+        <li class={it.level === 3 ? "ml-3" : ""}>
+          <a
+            href={`#${it.id}`}
+            data-toc={it.id}
+            class="block text-(--color-ink-600) hover:text-(--color-ink-900) transition-colors leading-snug"
+          >
+            {it.text}
+          </a>
+        </li>
+      ))}
+    </ol>
+  </nav>
+)}
+
+<script>
+  // Scrollspy — highlight active TOC entry as user scrolls
+  const list = document.getElementById("il-toc-list");
+  if (list) {
+    const links = Array.from(list.querySelectorAll<HTMLAnchorElement>("a[data-toc]"));
+    const ids = links.map((a) => a.dataset.toc!);
+    const headings = ids.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+
+    const set = (active: string | null) => {
+      for (const a of links) {
+        if (a.dataset.toc === active) {
+          a.style.color = "var(--color-ink-900)";
+          a.style.fontWeight = "600";
+        } else {
+          a.style.color = "";
+          a.style.fontWeight = "";
+        }
+      }
+    };
+
+    if (headings.length) {
+      const obs = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter((e) => e.isIntersecting)
+            .sort((a, b) => a.target.getBoundingClientRect().top - b.target.getBoundingClientRect().top)[0];
+          if (visible) set(visible.target.id);
+        },
+        { rootMargin: "-25% 0px -65% 0px", threshold: [0, 1] },
+      );
+      headings.forEach((h) => obs.observe(h));
+    }
+  }
+</script>

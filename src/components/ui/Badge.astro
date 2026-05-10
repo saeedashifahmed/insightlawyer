@@ -1,0 +1,28 @@
+---
+import { cn } from "@lib/utils/cn";
+
+interface Props {
+  variant?: "neutral" | "brand" | "gold" | "danger" | "success" | "live";
+  size?: "sm" | "md";
+  class?: string;
+}
+
+const { variant = "neutral", size = "sm", class: cls } = Astro.props as Props;
+
+const base = "inline-flex items-center gap-1 font-sans font-semibold uppercase tracking-wider whitespace-nowrap rounded-sm";
+const sizes = {
+  sm: "text-[0.66rem] px-1.5 py-0.5",
+  md: "text-xs px-2 py-1",
+};
+const variants = {
+  neutral: "bg-(--color-ink-100) text-(--color-ink-700)",
+  brand: "bg-(--color-brand-500) text-(--color-paper)",
+  gold: "bg-(--color-gold-400) text-(--color-ink-900)",
+  danger: "bg-(--color-danger) text-white",
+  success: "bg-(--color-success) text-white",
+  live: "bg-(--color-danger) text-white before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-white before:animate-pulse",
+};
+---
+<span class={cn(base, sizes[size], variants[variant], cls)}>
+  <slot />
+</span>

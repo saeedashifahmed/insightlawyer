@@ -1,0 +1,79 @@
+@media print {
+  :root {
+    --color-paper: #ffffff;
+    --color-paper-2: #ffffff;
+    --color-ink-800: #000000;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-family: var(--font-serif), Georgia, serif !important;
+    font-size: 11pt !important;
+    line-height: 1.55 !important;
+  }
+
+  header,
+  footer,
+  nav,
+  aside,
+  .no-print,
+  [data-no-print],
+  .reading-progress,
+  .sheet,
+  .sheet-backdrop,
+  .ticker {
+    display: none !important;
+  }
+
+  main { padding: 0 !important; margin: 0 !important; }
+
+  .prose {
+    max-width: none !important;
+    font-size: 11pt !important;
+  }
+
+  .prose > * { max-width: none !important; }
+
+  .prose h2, .prose h3 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+  .prose p, .prose blockquote, .prose figure, .prose table {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .prose figure img {
+    border: 0 !important;
+    max-height: 4in;
+    object-fit: contain;
+  }
+
+  .prose a {
+    color: #000 !important;
+    text-decoration: underline !important;
+  }
+  .prose a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #555;
+    word-break: break-all;
+  }
+
+  .prose h2::before { display: none !important; }
+
+  .prose .citation {
+    border-bottom: 0 !important;
+    color: #000 !important;
+  }
+
+  .prose pre, .prose code {
+    background: #f4f4f4 !important;
+    color: #000 !important;
+  }
+
+  @page {
+    margin: 0.75in 0.6in;
+  }
+}

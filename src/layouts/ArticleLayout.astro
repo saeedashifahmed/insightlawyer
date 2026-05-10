@@ -1,0 +1,140 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import ReadingProgress from "@components/layout/ReadingProgress.astro";
+import BreadcrumbBar from "@components/layout/BreadcrumbBar.astro";
+import PostHeader from "@components/post/PostHeader.astro";
+import PostBody from "@components/post/PostBody.astro";
+import PostShareBar from "@components/post/PostShareBar.astro";
+import PostShareSheetMobile from "@components/post/PostShareSheetMobile.astro";
+import TableOfContents from "@components/post/TableOfContents.astro";
+import AuthorBox from "@components/post/AuthorBox.astro";
+import RelatedPosts from "@components/post/RelatedPosts.astro";
+import TagCloud from "@components/post/TagCloud.astro";
+import Disclaimer from "@components/post/Disclaimer.astro";
+import JsonLd from "@components/seo/JsonLd.astro";
+import { extractToc } from "@lib/wp/enhance-html";
+import { wordCount, readingTimeMinutes } from "@lib/utils/reading-time";
+import { isoDate } from "@lib/utils/date";
+import { siteUrl } from "@lib/wp/url";
+import type { WPPost, WPNews } from "@lib/wp/types";
+
+interface Props {
+  post: WPPost | WPNews;
+  enhancedHtml: string;
+  related?: WPPost[];
+  variant?: "post" | "news";
+}
+
+const { post, enhancedHtml, related = [], variant = "post" } = Astro.props as Props;
+
+const SITE_URL = (import.meta.env.PUBLIC_SITE_URL ?? "https://insightlawyer.in").replace(/\/$/, "");
+const url = `${SITE_URL}${Astro.url.pathname}`;
+const toc = extractToc(enhancedHtml);
+const words = wordCount(enhancedHtml);
+const minutes = readingTimeMinutes(enhancedHtml);
+
+const author = post.author?.node;
+const primaryCategory = post.categories?.nodes?.[0];
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  ...(variant === "news"
+    ? [{ label: "News", href: "/news" }]
+    : primaryCategory
+      ? [{ label: primaryCategory.name, href: `/category/${primaryCategory.slug}` }]
+      : []),
+  { label: post.title },
+];
+
+// Article schema (RankMath usually emits Article; this adds wordCount + articleSection).
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": variant === "news" ? "NewsArticle" : "Article",
+  headline: post.title,
+  url,
+  datePublished: isoDate(post.date),
+  dateModified: isoDate(post.modified ?? post.date),
+  inLanguage: "en-IN",
+  wordCount: words,
+  articleSection: primaryCategory?.name,
+  author: author
+    ? {
+        "@type": "Person",
+        name: author.name,
+        url: author.slug ? `${SITE_URL}/author/${author.slug}` : undefined,
+      }
+    : undefined,
+  image: post.featuredImage?.node?.sourceUrl,
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: breadcrumbs.map((b, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: b.label,
+    item: b.href ? siteUrl(b.href) : url,
+  })),
+};
+---
+<BaseLayout
+  title={post.title}
+  description={post.seo?.description ?? post.excerpt}
+  image={post.featuredImage?.node?.sourceUrl}
+  type="article"
+  publishedTime={isoDate(post.date)}
+  modifiedTime={isoDate(post.modified ?? post.date)}
+  canonical={url}
+>
+  <ReadingProgress />
+  <BreadcrumbBar items={breadcrumbs} />
+
+  <article class="container-wide pb-16">
+    <PostHeader post={post} variant={variant} minutes={minutes} />
+
+    <div class="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-8 lg:col-start-1">
+        {/* Mobile-only TOC dock */}
+        {toc.length > 0 && (
+          <div class="lg:hidden mb-6">
+            <TableOfContents items={toc} compact />
+          </div>
+        )}
+        <PostBody html={enhancedHtml} dropCap={words > 800} />
+
+        <footer class="mt-12 pt-8 border-t border-(--color-ink-200) space-y-10">
+          {post.tags?.nodes && post.tags.nodes.length > 0 && (
+            <TagCloud tags={post.tags.nodes} />
+          )}
+          <PostShareBar url={url} title={post.title} />
+          {author && <AuthorBox author={author} />}
+          <Disclaimer />
+        </footer>
+
+        {related.length > 0 && (
+          <section class="mt-16">
+            <h2 class="font-serif text-2xl md:text-3xl font-semibold text-(--color-ink-900) mb-6">
+              Read more
+            </h2>
+            <RelatedPosts posts={related} />
+          </section>
+        )}
+      </div>
+
+      {/* Desktop right rail */}
+      <aside class="hidden lg:block lg:col-span-4">
+        <div class="sticky top-24 space-y-8">
+          {toc.length > 0 && <TableOfContents items={toc} />}
+          <div class="border-t border-(--color-ink-200) pt-6">
+            <PostShareBar url={url} title={post.title} compact />
+          </div>
+        </div>
+      </aside>
+    </div>
+  </article>
+
+  <PostShareSheetMobile url={url} title={post.title} />
+
+  <JsonLd data={[articleSchema, breadcrumbSchema]} />
+</BaseLayout>

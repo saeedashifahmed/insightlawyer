@@ -1,0 +1,195 @@
+---
+/**
+ * Component sandbox for visual review. Only available in dev.
+ * Visit /_design to see every component, prose element, and state.
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Badge from "@components/ui/Badge.astro";
+import Pill from "@components/ui/Pill.astro";
+import Button from "@components/ui/Button.astro";
+import IconButton from "@components/ui/IconButton.astro";
+import Skeleton from "@components/ui/Skeleton.astro";
+import Tabs from "@components/ui/Tabs.astro";
+import Accordion from "@components/ui/Accordion.astro";
+import Pagination from "@components/ui/Pagination.astro";
+import EmptyState from "@components/ui/EmptyState.astro";
+import ErrorState from "@components/ui/ErrorState.astro";
+import Toast from "@components/ui/Toast.astro";
+import PostCardLarge from "@components/cards/PostCardLarge.astro";
+import PostCardMedium from "@components/cards/PostCardMedium.astro";
+import PostCardSmall from "@components/cards/PostCardSmall.astro";
+import PostCardList from "@components/cards/PostCardList.astro";
+import CategoryCard from "@components/cards/CategoryCard.astro";
+import { Heart } from "@lucide/astro";
+
+if (!import.meta.env.DEV) {
+  return new Response("Not found", { status: 404 });
+}
+
+const samplePost = {
+  __typename: "Post" as const,
+  id: "1",
+  databaseId: 1,
+  slug: "constitutional-bench-clarifies-test-on-equal-pay",
+  uri: "/constitutional-bench-clarifies-test-on-equal-pay",
+  title: "Constitutional Bench clarifies the test on equal pay for equal work",
+  excerpt: "<p>The Supreme Court's five-judge bench has, in a rare unanimous ruling, redrawn the contours of Article 39(d). Here's what changes for public-sector employers.</p>",
+  content: "<p>Long-form sample content for layout testing.</p>",
+  date: "2025-04-22T09:30:00",
+  modified: "2025-04-22T09:30:00",
+  featuredImage: { node: { sourceUrl: "https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=1200", altText: "Supreme Court of India facade" } },
+  author: { node: { name: "Aanya Mehra", slug: "aanya-mehra", avatar: { url: "https://i.pravatar.cc/100?u=aanya" }, roles: { nodes: [{ displayName: "Senior Reporter" }] } } },
+  categories: { nodes: [{ name: "Constitutional", slug: "constitutional" }] },
+  tags: { nodes: [{ name: "Article 39", slug: "article-39" }, { name: "Equal pay", slug: "equal-pay" }] },
+};
+
+const sampleCategory = {
+  id: "1",
+  databaseId: 1,
+  name: "Criminal",
+  slug: "criminal",
+  description: "Trial procedure, evidence, and substantive criminal law.",
+  count: 42,
+};
+---
+<BaseLayout title="Design system" noindex={true}>
+  <div class="container-wide py-10 space-y-16">
+    <header>
+      <span class="kicker">/_design</span>
+      <h1 class="mt-2 font-serif text-4xl font-semibold">Component sandbox</h1>
+    </header>
+
+    <section>
+      <h2 class="font-serif text-2xl mb-4">Badges</h2>
+      <div class="flex flex-wrap gap-2">
+        <Badge>Neutral</Badge>
+        <Badge variant="brand">Brand</Badge>
+        <Badge variant="gold">Gold</Badge>
+        <Badge variant="danger">Danger</Badge>
+        <Badge variant="success">Success</Badge>
+        <Badge variant="live">Live</Badge>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="font-serif text-2xl mb-4">Pills</h2>
+      <div class="flex flex-wrap gap-2">
+        <Pill>Default</Pill>
+        <Pill active>Active</Pill>
+        <Pill href="/blog">As link</Pill>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="font-serif text-2xl mb-4">Buttons</h2>
+      <div class="flex flex-wrap gap-3 items-center">
+        <Button>Primary</Button>
+        <Button variant="secondary">Secondary</Button>
+        <Button variant="outline">Outline</Button>
+        <Button variant="ghost">Ghost</Button>
+        <Button size="sm">Small</Button>
+        <Button size="lg">Large</Button>
+        <Button disabled>Disabled</Button>
+        <IconButton ariaLabel="Like"><Heart class="w-5 h-5" /></IconButton>
+        <IconButton ariaLabel="Like" variant="solid"><Heart class="w-5 h-5" /></IconButton>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="font-serif text-2xl mb-4">Skeletons</h2>
+      <div class="space-y-2 max-w-md">
+        <Skeleton height="0.75rem" width="40%" />
+        <Skeleton height="1.5rem" />
+        <Skeleton height="1rem" width="70%" />
+      </div>
+    </section>
+
+    <section>
+      <h2 class="font-serif text-2xl mb-4">Tabs</h2>
+      <Tabs
+        active="all"
+        tabs={[
+          { id: "all", label: "All", count: 42 },
+          { id: "criminal", label: "Criminal", count: 12 },
+          { id: "tax", label: "Tax", count: 8 },
+        ]}
+      />
+    </section>
+
+    <section>
+      <h2 class="font-serif text-2xl mb-4">Accordion</h2>
+      <Accordion summary="What is the standard of review?" open>
+        <p class="font-serif">Indian appellate practice distinguishes between findings of fact and findings of law. Concurrent findings of fact are rarely disturbed in second appeal under Section 100 CPC.</p>
+      </Accordion>
+      <Accordion summary="Can a writ lie against a private body?">
+        <p class="font-serif">Yes, in narrow circumstances — if the body discharges a public function or is funded substantially by the State.</p>
+      </Accordion>
+    </section>
+
+    <section>
+      <h2 class="font-serif text-2xl mb-4">Pagination</h2>
+      <Pagination current={3} total={8} hrefFor={(p) => `?page=${p}`} />
+    </section>
+
+    <section>
+      <h2 class="font-serif text-2xl mb-4">States</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <EmptyState />
+        <ErrorState />
+      </div>
+    </section>
+
+    <section>
+      <h2 class="font-serif text-2xl mb-4">Cards</h2>
+      <div class="space-y-12">
+        <PostCardLarge post={samplePost} />
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <PostCardMedium post={samplePost} />
+          <PostCardMedium post={samplePost} />
+          <PostCardMedium post={samplePost} />
+        </div>
+        <div class="space-y-3">
+          <PostCardSmall post={samplePost} />
+          <PostCardSmall post={samplePost} />
+        </div>
+        <div>
+          <PostCardList post={samplePost} index={1} />
+          <PostCardList post={samplePost} index={2} />
+        </div>
+        <CategoryCard category={sampleCategory} latest={samplePost} />
+      </div>
+    </section>
+
+    <section>
+      <h2 class="font-serif text-2xl mb-4">Prose specimen</h2>
+      <article class="prose mx-auto" data-dropcap="true">
+        <p>The Supreme Court of India sits at the apex of the Indian judicial system. Article 141 of the Constitution declares that the law laid down by the Court shall be binding on all courts within the territory of India.</p>
+        <p>This principle — articulated in <span class="citation">AIR 1973 SC 1461</span> and reaffirmed in <span class="citation">(2007) 4 SCC 221</span> — frames every appellate brief that crosses the registry. <span class="citation">Section 397 CrPC</span> governs revisional jurisdiction.</p>
+        <h2>The doctrine of stare decisis</h2>
+        <p>Stare decisis means to stand by what is decided. Yet Indian constitutional practice tolerates calibrated departure when fundamental principles are at stake.</p>
+        <h3>Bench strength matters</h3>
+        <p>A two-judge bench cannot overrule a three-judge bench. This rule is procedural, but it has substantive consequences for litigants.</p>
+        <blockquote>The doctrine of precedent is not a strait-jacket; it is the spine of the common law system, providing structure without rigidity.</blockquote>
+        <blockquote class="pullquote">Every legal system finds its voice in the way it treats its own past.</blockquote>
+        <h4>A note on terminology</h4>
+        <ul>
+          <li>Per incuriam — through lack of care</li>
+          <li>Obiter dicta — said in passing</li>
+          <li>Ratio decidendi — the reason for the decision</li>
+        </ul>
+        <p>Tables retain their meaning when the data is small:</p>
+        <table>
+          <thead><tr><th>Doctrine</th><th>Origin</th></tr></thead>
+          <tbody>
+            <tr><td>Basic structure</td><td>Kesavananda Bharati</td></tr>
+            <tr><td>Pith and substance</td><td>Prafulla Kumar Mukherjee</td></tr>
+          </tbody>
+        </table>
+        <hr />
+        <p>The footnote convention <sup><a href="#fn1">1</a></sup> is preserved.</p>
+      </article>
+    </section>
+
+    <Toast />
+  </div>
+</BaseLayout>

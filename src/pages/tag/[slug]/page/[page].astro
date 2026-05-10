@@ -1,0 +1,62 @@
+---
+import ArchiveLayout from "@layouts/ArchiveLayout.astro";
+import PostCardLarge from "@components/cards/PostCardLarge.astro";
+import EmptyState from "@components/ui/EmptyState.astro";
+import Pagination from "@components/ui/Pagination.astro";
+import { getTagBySlug, getPostsByTag } from "@lib/wp/queries";
+import { tagPath } from "@lib/wp/url";
+
+const { slug, page: pageStr } = Astro.params;
+if (!slug) return Astro.rewrite("/404");
+const page = Number.parseInt(pageStr ?? "1", 10);
+if (!Number.isFinite(page) || page <= 1) return Astro.redirect(tagPath(slug));
+
+const PER_PAGE = 12;
+let tag = null;
+let posts: Awaited<ReturnType<typeof getPostsByTag>>["posts"] | null = null;
+try {
+  tag = (await getTagBySlug(slug)).tag;
+  let after: string | undefined = undefined;
+  for (let i = 1; i < page; i++) {
+    const r = await getPostsByTag(slug, PER_PAGE, after);
+    if (!r.posts.pageInfo?.hasNextPage) {
+      posts = { nodes: [], pageInfo: { hasNextPage: false } };
+      break;
+    }
+    after = r.posts.pageInfo?.endCursor;
+  }
+  if (!posts) posts = (await getPostsByTag(slug, PER_PAGE, after)).posts;
+} catch {
+  /* below */
+}
+if (!tag) return Astro.rewrite("/404");
+const items = posts?.nodes ?? [];
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: `#${tag.name}`, href: tagPath(slug) },
+  { label: `Page ${page}` },
+];
+---
+<ArchiveLayout
+  title={`#${tag.name}`}
+  kicker={`Page ${page}`}
+  breadcrumbs={breadcrumbs}
+  canonical={tagPath(slug, page)}
+>
+  {items.length > 0 ? (
+    <>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+        {items.map((p) => <PostCardLarge post={p} />)}
+      </div>
+      <Pagination
+        current={page}
+        hasNext={posts?.pageInfo?.hasNextPage ?? false}
+        hasPrev={true}
+        hrefFor={(p) => tagPath(slug, p)}
+      />
+    </>
+  ) : (
+    <EmptyState title="No more articles" />
+  )}
+</ArchiveLayout>

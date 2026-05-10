@@ -1,0 +1,40 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import { getPageBySlug } from "@lib/wp/queries";
+import { enhanceWpHtml } from "@lib/wp/enhance-html";
+
+let html = "";
+let title = "Contact";
+let description = "Reach the Insight Lawyer newsroom.";
+try {
+  const r = await getPageBySlug("contact");
+  if (r.page) {
+    title = r.page.title || title;
+    description = r.page.seo?.description ?? description;
+    html = await enhanceWpHtml(r.page.content ?? "");
+  }
+} catch {
+  /* fall back below */
+}
+---
+<PageLayout title={title} description={description} breadcrumbs={[{ label: "Home", href: "/" }, { label: "Contact" }]}>
+  {html ? (
+    <Fragment set:html={html} />
+  ) : (
+    <>
+      <p>Tips, corrections, and pitches are welcome.</p>
+      <h2>Editorial</h2>
+      <p>
+        <a href="mailto:editor@insightlawyer.in">editor@insightlawyer.in</a><br />
+        For story pitches, tips, and corrections.
+      </p>
+      <h2>Press</h2>
+      <p>
+        <a href="mailto:press@insightlawyer.in">press@insightlawyer.in</a><br />
+        For interview requests, syndication, and partnerships.
+      </p>
+      <h2>Office</h2>
+      <p>New Delhi, India.</p>
+    </>
+  )}
+</PageLayout>

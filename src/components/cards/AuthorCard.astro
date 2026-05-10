@@ -1,0 +1,23 @@
+---
+import type { WPAuthor } from "@lib/wp/types";
+import { authorPath } from "@lib/wp/url";
+
+interface Props { author: WPAuthor; }
+const { author } = Astro.props as Props;
+const role = author.roles?.nodes?.[0]?.displayName;
+---
+<a href={authorPath(author.slug)} class="card flex items-center gap-4 p-4 group">
+  {author.avatar?.url && (
+    <img
+      src={author.avatar.url}
+      alt={author.name}
+      loading="lazy"
+      class="w-14 h-14 rounded-full border border-(--color-ink-200)"
+    />
+  )}
+  <div class="min-w-0">
+    <h3 class="font-serif text-lg font-semibold text-(--color-ink-900) group-hover:text-(--color-brand-600) transition-colors">{author.name}</h3>
+    {role && <p class="text-xs font-sans uppercase tracking-wider text-(--color-ink-500)">{role}</p>}
+    {author.description && <p class="mt-1 text-sm text-(--color-ink-600) line-clamp-2">{author.description}</p>}
+  </div>
+</a>

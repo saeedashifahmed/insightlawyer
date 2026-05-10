@@ -1,0 +1,27 @@
+---
+import { Inbox } from "@lucide/astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
+const {
+  title = "Nothing here yet",
+  description = "Check back soon — new content arrives every weekday.",
+  ctaLabel,
+  ctaHref,
+} = Astro.props as Props;
+---
+<div class="text-center max-w-md mx-auto py-16">
+  <div class="inline-flex w-12 h-12 items-center justify-center rounded-full bg-(--color-paper-2) text-(--color-ink-500) mb-4">
+    <Inbox class="w-5 h-5" />
+  </div>
+  <h2 class="font-serif text-2xl text-(--color-ink-900)">{title}</h2>
+  <p class="mt-2 text-(--color-ink-600)">{description}</p>
+  {ctaLabel && ctaHref && (
+    <a href={ctaHref} class="tap mt-5 inline-flex items-center px-4 py-2 rounded-md bg-(--color-brand-500) text-(--color-paper) font-semibold">{ctaLabel}</a>
+  )}
+</div>

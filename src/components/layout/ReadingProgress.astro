@@ -1,0 +1,23 @@
+---
+---
+<div class="reading-progress" aria-hidden="true">
+  <div class="reading-progress__fill" id="il-reading-fill"></div>
+</div>
+<script>
+  const fill = document.getElementById("il-reading-fill");
+  if (fill) {
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const article = document.querySelector("article");
+      if (!article) return;
+      const rect = article.getBoundingClientRect();
+      const total = rect.height - window.innerHeight;
+      const scrolled = -rect.top;
+      const ratio = total > 0 ? Math.min(Math.max(scrolled / total, 0), 1) : 0;
+      fill.style.width = `${ratio * 100}%`;
+    };
+    window.addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
+    update();
+  }
+</script>

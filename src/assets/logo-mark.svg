@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Insight Lawyer">
+  <rect width="48" height="48" rx="4" fill="#162941"/>
+  <text x="24" y="26" text-anchor="middle" dominant-baseline="middle"
+        font-family="'Times New Roman', Georgia, serif" font-weight="600" font-size="20"
+        letter-spacing="0.4"
+        fill="#e7c97a">IL</text>
+  <rect x="20" y="36" width="8" height="1.5" fill="#d4af4f"/>
+</svg>

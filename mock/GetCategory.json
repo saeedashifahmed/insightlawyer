@@ -1,0 +1,11 @@
+{
+  "category": {
+    "id": "cat-1",
+    "databaseId": 1,
+    "name": "Constitutional",
+    "slug": "constitutional",
+    "description": "Long-form analysis of constitutional questions in Indian courts — basic structure, fundamental rights, and the federal compact.",
+    "count": 24,
+    "uri": "/category/constitutional"
+  }
+}

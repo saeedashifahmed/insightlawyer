@@ -1,0 +1,38 @@
+---
+import type { WPPost } from "@lib/wp/types";
+import { formatDateShort } from "@lib/utils/date";
+import { postPath, categoryPath } from "@lib/wp/url";
+
+interface Props { post: WPPost; }
+const { post } = Astro.props as Props;
+const cat = post.categories?.nodes?.[0];
+const img = post.featuredImage?.node;
+---
+<article class="group">
+  <a href={postPath(post.slug)} class="flex gap-3 items-start">
+    {img?.sourceUrl && (
+      <div class="flex-none w-24 h-24 sm:w-28 sm:h-28 overflow-hidden rounded-md border border-(--color-ink-200) bg-(--color-paper-2)">
+        <img
+          src={img.sourceUrl}
+          alt={img.altText ?? post.title}
+          loading="lazy"
+          decoding="async"
+          class="w-full h-full object-cover"
+        />
+      </div>
+    )}
+    <div class="min-w-0">
+      {cat && (
+        <span class="kicker">{cat.name}</span>
+      )}
+      <h4 class="mt-1 font-serif text-base font-semibold text-(--color-ink-900) leading-snug line-clamp-3 group-hover:text-(--color-brand-600) transition-colors">
+        {post.title}
+      </h4>
+      {post.date && (
+        <time datetime={post.date} class="mt-1.5 block text-xs font-sans text-(--color-ink-500)">
+          {formatDateShort(post.date)}
+        </time>
+      )}
+    </div>
+  </a>
+</article>

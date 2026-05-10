@@ -1,0 +1,52 @@
+---
+import type { WPCategory, WPPost } from "@lib/wp/types";
+import { categoryPath, postPath } from "@lib/wp/url";
+import { Scale, Gavel, Building2, Banknote, Lightbulb, HeartHandshake, HardHat, Landmark, BookOpen } from "@lucide/astro";
+
+interface Props {
+  category: WPCategory;
+  latest?: WPPost;
+}
+const { category, latest } = Astro.props as Props;
+
+const ICONS: Record<string, typeof Scale> = {
+  constitutional: Landmark,
+  criminal: Gavel,
+  civil: Scale,
+  corporate: Building2,
+  tax: Banknote,
+  ip: Lightbulb,
+  family: HeartHandshake,
+  labor: HardHat,
+  news: BookOpen,
+};
+
+const Icon = ICONS[category.slug?.toLowerCase()] ?? Scale;
+---
+<a
+  href={categoryPath(category.slug)}
+  class="group block p-5 card relative overflow-hidden"
+>
+  <div class="flex items-start justify-between gap-4">
+    <div>
+      <span class="inline-flex items-center justify-center w-10 h-10 rounded-md bg-(--color-paper-2) text-(--color-brand-500) mb-3">
+        <Icon class="w-5 h-5" stroke-width={1.8} />
+      </span>
+      <h3 class="font-serif text-xl font-semibold text-(--color-ink-900) leading-tight group-hover:text-(--color-brand-600) transition-colors">
+        {category.name}
+      </h3>
+      {typeof category.count === "number" && (
+        <p class="mt-1 text-xs font-sans text-(--color-ink-500) uppercase tracking-wider">
+          {category.count} article{category.count === 1 ? "" : "s"}
+        </p>
+      )}
+    </div>
+  </div>
+
+  {latest && (
+    <div class="mt-4 pt-4 border-t border-(--color-ink-200)">
+      <p class="kicker text-(--color-ink-400) mb-1">Latest</p>
+      <p class="font-serif text-sm text-(--color-ink-700) leading-snug line-clamp-2">{latest.title}</p>
+    </div>
+  )}
+</a>

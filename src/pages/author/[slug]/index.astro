@@ -1,0 +1,47 @@
+---
+import ArchiveLayout from "@layouts/ArchiveLayout.astro";
+import PostCardLarge from "@components/cards/PostCardLarge.astro";
+import EmptyState from "@components/ui/EmptyState.astro";
+import { getAuthorBySlug, getPostsByAuthor } from "@lib/wp/queries";
+
+const { slug } = Astro.params;
+if (!slug) return Astro.rewrite("/404");
+
+let author = null;
+let posts: Awaited<ReturnType<typeof getPostsByAuthor>>["posts"] | null = null;
+try {
+  const [a, p] = await Promise.all([getAuthorBySlug(slug), getPostsByAuthor(slug, 24)]);
+  author = a.user;
+  posts = p.posts;
+} catch {
+  /* below */
+}
+if (!author) return Astro.rewrite("/404");
+const items = posts?.nodes ?? [];
+const role = author.roles?.nodes?.[0]?.displayName;
+
+const breadcrumbs = [
+  { label: "Home", href: "/" },
+  { label: "Contributors" },
+  { label: author.name },
+];
+---
+<ArchiveLayout
+  title={author.name}
+  kicker={role ?? "Contributor"}
+  description={author.description}
+  breadcrumbs={breadcrumbs}
+>
+  {author.avatar?.url && (
+    <div class="mb-8 flex items-center gap-4">
+      <img src={author.avatar.url} alt={author.name} loading="eager" class="w-20 h-20 rounded-full border border-(--color-ink-200)" />
+    </div>
+  )}
+  {items.length > 0 ? (
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+      {items.map((p, i) => <PostCardLarge post={p} imgPriority={i < 3} />)}
+    </div>
+  ) : (
+    <EmptyState title={`${author.name} hasn’t published yet`} />
+  )}
+</ArchiveLayout>

@@ -1,0 +1,54 @@
+{
+  "posts": {
+    "nodes": [
+      {
+        "__typename": "Post",
+        "id": "post-2",
+        "slug": "delhi-hc-on-section-498a",
+        "title": "Delhi High Court tightens the screws on misuse of Section 498A",
+        "excerpt": "<p>A division bench has issued binding directions to the Delhi Police.</p>",
+        "content": "",
+        "date": "2025-04-21T18:00:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=1200" } },
+        "author": { "node": { "name": "Rohan Iyer", "slug": "rohan-iyer" } },
+        "categories": { "nodes": [{ "name": "Criminal", "slug": "criminal" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "post-6",
+        "slug": "supreme-court-on-arbitration-act-amendment",
+        "title": "Supreme Court reads down the 2024 arbitration amendment",
+        "excerpt": "<p>A three-judge bench has narrowed the scope of the 2024 amendment.</p>",
+        "content": "",
+        "date": "2025-04-18T16:20:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200" } },
+        "author": { "node": { "name": "Aanya Mehra", "slug": "aanya-mehra" } },
+        "categories": { "nodes": [{ "name": "Civil", "slug": "civil" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "post-11",
+        "slug": "constitution-bench-on-anti-defection",
+        "title": "Constitution bench reserves judgment on anti-defection reference",
+        "excerpt": "<p>After eleven days of arguments, the bench is set to rule.</p>",
+        "content": "",
+        "date": "2025-04-14T19:30:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=1200" } },
+        "author": { "node": { "name": "Aanya Mehra", "slug": "aanya-mehra" } },
+        "categories": { "nodes": [{ "name": "Constitutional", "slug": "constitutional" }] }
+      },
+      {
+        "__typename": "Post",
+        "id": "post-13",
+        "slug": "civil-procedure-reform-pilot",
+        "title": "Bombay High Court launches civil procedure reform pilot",
+        "excerpt": "<p>Strict pre-trial timelines, mandatory mediation referral.</p>",
+        "content": "",
+        "date": "2025-04-12T08:15:00",
+        "featuredImage": { "node": { "sourceUrl": "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=1200" } },
+        "author": { "node": { "name": "Rohan Iyer", "slug": "rohan-iyer" } },
+        "categories": { "nodes": [{ "name": "Civil", "slug": "civil" }] }
+      }
+    ]
+  }
+}
