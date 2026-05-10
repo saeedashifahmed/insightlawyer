@@ -31,3 +31,7 @@ yarn-error.log*
 # Cache
 .cache/
 .turbo/
+
+# Cloudflare Wrangler local state
+.wrangler/
+.dev.vars

@@ -1,0 +1,35 @@
+/**
+ * Cloudflare Workers config for Insight Lawyer (Astro SSR + Static Assets).
+ *
+ * Note: `main` and `assets.directory` are NOT defined here — the Astro
+ * Cloudflare adapter auto-generates `dist/server/wrangler.json` with the
+ * correct paths during `astro build`. To deploy, run:
+ *   astro build && wrangler deploy --config dist/server/wrangler.json
+ *
+ * This file is the source of truth for vars, compatibility flags, and
+ * other Worker-level settings. It gets merged with the auto-generated
+ * config at deploy time.
+ *
+ * Set REVALIDATE_SECRET as an encrypted Secret in the Cloudflare dashboard
+ * (Workers & Pages → insight-lawyer → Settings → Variables and Secrets).
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "insight-lawyer",
+  "compatibility_date": "2024-12-30",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "PUBLIC_SITE_URL": "https://insightlawyer.in",
+    "PUBLIC_SITE_NAME": "Insight Lawyer",
+    "PUBLIC_SITE_TAGLINE": "Supreme Court — High Court — Legal Breaking News",
+    "WP_GRAPHQL_ENDPOINT": "https://cms.insightlawyer.in/graphql",
+    "WP_REST_BASE": "https://cms.insightlawyer.in/wp-json",
+    "WP_RANKMATH_HEAD_ENDPOINT": "https://cms.insightlawyer.in/wp-json/rankmath/v1/getHead",
+    "DEFAULT_OG_IMAGE": "/og-default.jpg",
+    "DEFAULT_LOCALE": "en-IN",
+    "DEFAULT_TIMEZONE": "Asia/Kolkata"
+  }
+}
